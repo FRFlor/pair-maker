@@ -1,8 +1,16 @@
 import {ref} from "vue";
 
+
 export default function usePairMaking() {
-    const currentNamesInLocalStorage = JSON.parse(localStorage.getItem("names") ?? "[]");
-    const names = ref<string[]>(currentNamesInLocalStorage);
+    function loadNames() {
+        return JSON.parse(localStorage.getItem("names") ?? "[]");
+    }
+
+    function saveNames() {
+        localStorage.setItem("names", JSON.stringify(names.value))
+    }
+
+    const names = ref<string[]>(loadNames());
 
     function addNewNameToList(newName: string) {
         const sanitizedName = newName.trim();
@@ -11,11 +19,17 @@ export default function usePairMaking() {
         }
 
         names.value.push(sanitizedName);
-        localStorage.setItem("names", JSON.stringify(names.value))
+        saveNames();
+    }
+
+    function deleteName(target: string) {
+        names.value = names.value.filter(name => target !== name);
+        saveNames();
     }
 
     return {
         names,
-        addNewNameToList
+        addNewNameToList,
+        deleteName
     }
 }
