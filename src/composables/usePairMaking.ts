@@ -1,5 +1,6 @@
 import {ref} from "vue";
 import {Pairing, PairingHistory} from "@/types";
+import {RNG} from "@/helpers/RNG";
 
 
 export default function usePairMaking() {
@@ -38,23 +39,28 @@ export default function usePairMaking() {
     }
 
     function proposePairing(): Pairing {
-        if (names.value.length === 0) {
-            return {};
+        let namesUnpaired = [...names.value];
+        const proposedPairing: Pairing = {};
+
+        while (namesUnpaired.length >= 2) {
+            const firstPick = RNG.randomElementInArray(namesUnpaired);
+            namesUnpaired = namesUnpaired.filter(name => name !== firstPick);
+
+            const secondPick = RNG.randomElementInArray(namesUnpaired);
+            namesUnpaired = namesUnpaired.filter(name => name !== secondPick);
+
+            if (firstPick < secondPick) {
+                proposedPairing[firstPick] = secondPick;
+            } else {
+                proposedPairing[secondPick] = firstPick;
+            }
         }
 
-        if (names.value.length === 1) {
-            return {[names.value[0]]: "Timeout"}
+        if (namesUnpaired.length === 1) {
+            proposedPairing[namesUnpaired[0]] = "Timeout";
         }
 
-        if (names.value.length === 2) {
-            names.value.sort();
-            return {[names.value[0]]: names.value[1]}
-        }
-
-        return {
-            [names.value[0]]: names.value[1],
-            [names.value[2]]: "Timeout",
-        }
+        return proposedPairing;
     }
 
     function savePairing(pairing: Pairing) {

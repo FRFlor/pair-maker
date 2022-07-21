@@ -99,6 +99,16 @@ describe("Use Pair Making", () => {
             const pairs = proposePairing();
             expect(Object.values(pairs)).toContain("Timeout");
         });
+
+        it("pairs everyone that is participating", () => {
+            const namesInLocalStorage = ["Ana", "Boris", "Charlie", "Daniel", "Elias", "Felipe", "Gerald"];
+            localStorage.setItem("names", JSON.stringify(namesInLocalStorage));
+            const {proposePairing} = usePairMaking();
+            const pairs = proposePairing();
+
+            const namesPairedUp = [...Object.keys(pairs), ...Object.values(pairs)];
+            namesInLocalStorage.forEach((name) => expect(namesPairedUp).toContain(name));
+        })
     })
 
     it("allows a pairing to be saved", () => {
@@ -112,6 +122,5 @@ describe("Use Pair Making", () => {
             "Ana": ["Boris"],
             "Boris": ["Ana"]
         })
-
     });
 })
