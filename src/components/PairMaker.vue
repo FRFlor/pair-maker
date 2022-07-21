@@ -14,7 +14,10 @@ function saveNewName() {
 function displayProposedPairings() {
   const pairings = proposePairing();
   proposedPairings.value = Object.keys(pairings)
-      .map((rightHandSide: string) => `${rightHandSide} and ${pairings[rightHandSide]}`);
+      .map((rightHandSide: string) => {
+        let leftHandSide = pairings[rightHandSide];
+        return leftHandSide === "Timeout" ? `TIMEOUT: ${rightHandSide}` : `${rightHandSide} and ${leftHandSide}`;
+      });
 }
 
 </script>
