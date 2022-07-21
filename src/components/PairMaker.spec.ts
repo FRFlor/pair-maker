@@ -1,11 +1,11 @@
 import {shallowMount} from '@vue/test-utils'
-import HelloWorld from '@/components/HelloWorld.vue'
+import PairMaker from '@/components/PairMaker.vue'
 
-describe('HelloWorld.vue', () => {
+describe('PairMaker.vue', () => {
   it('renders props.msg when passed', () => {
     const msg = 'new message'
-    const wrapper = shallowMount(HelloWorld, {
-      props: { msg }
+    const wrapper = shallowMount(PairMaker, {
+      props: {msg}
     })
     expect(wrapper.text()).toMatch(msg)
   })
