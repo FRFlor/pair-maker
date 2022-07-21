@@ -1,8 +1,10 @@
-export default function usePairMaking() {
-    const names: string[] = [];
+import {ref} from "vue";
 
-    function addNewNameToList(name: string) {
-        return;
+export default function usePairMaking() {
+    const names = ref<string[]>([]);
+
+    function addNewNameToList(newName: string) {
+        names.value.push(newName);
     }
 
     return {
