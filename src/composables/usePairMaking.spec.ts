@@ -31,6 +31,5 @@ describe("Use Pair Making", () => {
             namesInLocalStorage.forEach(nameInLocalStorage => expect(names.value).toContain(nameInLocalStorage));
         });
     })
-
 })
 
