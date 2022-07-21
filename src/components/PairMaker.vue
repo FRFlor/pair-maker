@@ -1,11 +1,10 @@
 <script lang="ts" setup>
 import usePairMaking from "@/composables/usePairMaking";
 import {ref} from "vue";
-import {Pairing} from "@/types";
 
 const {names, addNewNameToList, deleteName, proposePairing} = usePairMaking();
 const newName = ref<string>("");
-const proposedPairings = ref<Pairing>({});
+const proposedPairings = ref<string[]>([]);
 
 function saveNewName() {
   addNewNameToList(newName.value);
@@ -13,7 +12,9 @@ function saveNewName() {
 }
 
 function displayProposedPairings() {
-  proposedPairings.value = proposePairing();
+  const pairings = proposePairing();
+  proposedPairings.value = Object.keys(pairings)
+      .map((rightHandSide: string) => `${rightHandSide} and ${pairings[rightHandSide]}`);
 }
 
 </script>
@@ -36,7 +37,7 @@ function displayProposedPairings() {
     <ul id="pairs-list">
       <h2>Pairs</h2>
       <button id="see-proposed-pairings" @click="displayProposedPairings">Propose pairs</button>
-      {{ proposedPairings }}
+      <li v-for="proposedPairing in proposedPairings" :key="proposedPairing">{{ proposedPairing }}</li>
     </ul>
   </section>
 </template>
@@ -64,4 +65,9 @@ section {
   grid-area: pairs
 }
 
+li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
 </style>
