@@ -121,6 +121,15 @@ describe("Use Pair Making", () => {
                 expect(pairs["Ana"]).not.toEqual("Boris");
             }
         })
+
+        it("throws error when finding new pairs is impossible", () => {
+            const namesInLocalStorage = ["Ana", "Boris"];
+            localStorage.setItem("names", JSON.stringify(namesInLocalStorage));
+            const {savePairing, proposePairing} = usePairMaking();
+            savePairing({"Ana": "Boris"});
+
+            expect(() => proposePairing()).toThrowError();
+        })
     })
 
     it("allows a pairing to be saved", () => {

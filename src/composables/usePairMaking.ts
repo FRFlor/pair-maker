@@ -40,18 +40,43 @@ export default function usePairMaking() {
         saveNames();
     }
 
+    function throwErrorIfPairingIsNoLongerPossible() {
+        if (names.value.length < 2) {
+            return;
+        }
+
+        const hasEveryonePairedWithEveryone = names.value.every((name) => {
+            const everyoneElse = names.value.filter(otherName => otherName !== name);
+            const currentPairs = pairingHistory.value[name] ?? [];
+            const possiblePairs = everyoneElse
+                .filter(name => !currentPairs.includes(name));
+
+            return possiblePairs.length === 0;
+        });
+
+        if (hasEveryonePairedWithEveryone) {
+            throw Error("Cannot make more pairs!");
+        }
+    }
+
     function proposePairing(): Pairing {
         let namesUnpaired = [...names.value];
         const proposedPairing: Pairing = {};
+
+        throwErrorIfPairingIsNoLongerPossible();
 
         while (namesUnpaired.length >= 2) {
             const firstPick = RNG.randomElementInArray(namesUnpaired);
             namesUnpaired = namesUnpaired.filter(name => name !== firstPick);
 
-            let secondPick = RNG.randomElementInArray(namesUnpaired);
-            while ((pairingHistory.value[firstPick] ?? []).includes(secondPick)) {
-                secondPick = RNG.randomElementInArray(namesUnpaired);
+            const previousPairsForFirstPick: string[] = pairingHistory.value[firstPick] ?? [];
+            const possiblePairs = namesUnpaired.filter(name => !previousPairsForFirstPick.includes(name));
+            if (possiblePairs.length === 0) {
+                proposedPairing[firstPick] = TIMEOUT;
+                continue;
             }
+
+            const secondPick = RNG.randomElementInArray(possiblePairs);
             namesUnpaired = namesUnpaired.filter(name => name !== secondPick);
 
             if (firstPick < secondPick) {
