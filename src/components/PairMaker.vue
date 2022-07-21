@@ -2,6 +2,7 @@
 import usePairMaking, {TIMEOUT} from "@/composables/usePairMaking";
 import {computed, ref} from "vue";
 import {Pairing} from "@/types";
+import AddToPairingHistory from "@/components/AddToPairingHistory.vue";
 
 const {names, pairingHistory, addNewNameToList, deleteName, proposePairing, savePairing} = usePairMaking();
 const newName = ref<string>("");
@@ -82,6 +83,10 @@ function saveProposedPairings() {
       <ul>
         <li v-for="pairingHistoryEntry in pairingHistoryList" :key="pairingHistoryEntry">{{ pairingHistoryEntry }}</li>
       </ul>
+    </div>
+
+    <div id="manual-pairing">
+      <AddToPairingHistory/>
     </div>
 
   </section>

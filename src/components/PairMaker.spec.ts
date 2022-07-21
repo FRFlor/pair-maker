@@ -101,4 +101,16 @@ describe('PairMaker.vue', () => {
 
         expect(wrapper.find('#errors').text()).not.toEqual("");
     })
+
+    xit("Allows Manual Entries to the Pairing History", async () => {
+        const namesInLocalStorage = ["Ana", "Boris"];
+        localStorage.setItem("names", JSON.stringify(namesInLocalStorage));
+        wrapper = mount(PairMaker)
+
+        await wrapper.find("#manual-pairing select[name=right-hand-side]").setValue("Ana");
+        await wrapper.find("#manual-pairing select[name=left-hand-side]").setValue("Boris");
+        await wrapper.find("#manual-pairing button").trigger("click");
+
+        expect(wrapper.find("#pairing-history").text()).toContain("Ana");
+    });
 })

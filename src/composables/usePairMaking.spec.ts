@@ -3,6 +3,9 @@ import usePairMaking, {TIMEOUT} from "@/composables/usePairMaking";
 describe("Use Pair Making", () => {
     beforeEach(() => {
         localStorage.clear();
+        const {names, pairingHistory} = usePairMaking();
+        names.value = [];
+        pairingHistory.value = {};
     })
 
     it("Starts with an empty list", () => {
@@ -30,7 +33,7 @@ describe("Use Pair Making", () => {
             const namesInLocalStorage = ["Ana", "Boris", "Clara"];
             localStorage.setItem("names", JSON.stringify(namesInLocalStorage));
 
-            const {names, addNewNameToList} = usePairMaking();
+            const {names} = usePairMaking();
 
             namesInLocalStorage.forEach(nameInLocalStorage => expect(names.value).toContain(nameInLocalStorage));
         });

@@ -2,28 +2,29 @@ import {ref} from "vue";
 import {Pairing, PairingHistory} from "@/types";
 import {RNG} from "@/helpers/RNG";
 
-export const TIMEOUT = "Timeout";
+function loadNames() {
+    return JSON.parse(localStorage.getItem("names") ?? "[]");
+}
 
+function saveNames() {
+    localStorage.setItem("names", JSON.stringify(names.value))
+}
+
+function loadPairingHistory() {
+    return JSON.parse(localStorage.getItem("pairingHistory") ?? "{}");
+}
+
+function savePairingHistory() {
+    localStorage.setItem("pairingHistory", JSON.stringify(pairingHistory.value))
+}
+
+export const TIMEOUT = "Timeout";
+const names = ref<string[]>([]);
+const pairingHistory = ref<PairingHistory>({});
 
 export default function usePairMaking() {
-    function loadNames() {
-        return JSON.parse(localStorage.getItem("names") ?? "[]");
-    }
-
-    function saveNames() {
-        localStorage.setItem("names", JSON.stringify(names.value))
-    }
-
-    function loadPairingHistory() {
-        return JSON.parse(localStorage.getItem("pairingHistory") ?? "{}");
-    }
-
-    function savePairingHistory() {
-        localStorage.setItem("pairingHistory", JSON.stringify(pairingHistory.value))
-    }
-
-    const names = ref<string[]>(loadNames());
-    const pairingHistory = ref<PairingHistory>(loadPairingHistory());
+    names.value = loadNames();
+    pairingHistory.value = loadPairingHistory();
 
     function addNewNameToList(newName: string) {
         const sanitizedName = newName.trim();
