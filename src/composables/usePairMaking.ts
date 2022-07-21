@@ -11,8 +11,16 @@ export default function usePairMaking() {
         localStorage.setItem("names", JSON.stringify(names.value))
     }
 
+    function loadPairingHistory() {
+        return JSON.parse(localStorage.getItem("pairingHistory") ?? "{}");
+    }
+
+    function savePairingHistory() {
+        localStorage.setItem("pairingHistory", JSON.stringify(pairingHistory.value))
+    }
+
     const names = ref<string[]>(loadNames());
-    const pairingHistory = ref<PairingHistory>({});
+    const pairingHistory = ref<PairingHistory>(loadPairingHistory());
 
     function addNewNameToList(newName: string) {
         const sanitizedName = newName.trim();
@@ -68,6 +76,7 @@ export default function usePairMaking() {
         }
 
         pairingHistory.value = newHistory;
+        savePairingHistory();
     }
 
 

@@ -34,6 +34,28 @@ describe("Use Pair Making", () => {
 
             namesInLocalStorage.forEach(nameInLocalStorage => expect(names.value).toContain(nameInLocalStorage));
         });
+
+        it("Stores the pairingHistory in Local Storage", () => {
+            const namesInLocalStorage = ["Ana", "Boris"];
+            localStorage.setItem("names", JSON.stringify(namesInLocalStorage));
+            const {savePairing, pairingHistory} = usePairMaking();
+            savePairing({"Ana": "Boris"});
+
+            expect(localStorage.getItem("pairingHistory")).toEqual(JSON.stringify(pairingHistory.value));
+        });
+
+        it("Retrieves pairingHistory from Local Storage automatically upon instantiation", () => {
+            localStorage.setItem("pairingHistory", JSON.stringify({
+                "Ana": ["Boris"],
+                "Boris": ["Ana"]
+            }));
+
+            const {pairingHistory} = usePairMaking();
+            expect(pairingHistory.value).toEqual({
+                "Ana": ["Boris"],
+                "Boris": ["Ana"]
+            })
+        });
     })
 
     it("Prevents duplicated names", () => {
