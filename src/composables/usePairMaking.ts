@@ -46,7 +46,10 @@ export default function usePairMaking() {
             const firstPick = RNG.randomElementInArray(namesUnpaired);
             namesUnpaired = namesUnpaired.filter(name => name !== firstPick);
 
-            const secondPick = RNG.randomElementInArray(namesUnpaired);
+            let secondPick = RNG.randomElementInArray(namesUnpaired);
+            while ((pairingHistory.value[firstPick] ?? []).includes(secondPick)) {
+                secondPick = RNG.randomElementInArray(namesUnpaired);
+            }
             namesUnpaired = namesUnpaired.filter(name => name !== secondPick);
 
             if (firstPick < secondPick) {
