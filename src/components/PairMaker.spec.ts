@@ -34,4 +34,13 @@ describe('PairMaker.vue', () => {
 
     expect(submitButton.attributes("disabled")).not.toBeDefined();
   });
+
+  it("Allows a name to be deleted", async () => {
+    await wrapper.find("input[type=text]#new-name").setValue("Boris");
+    await wrapper.find("button#add-name").trigger("click");
+
+    await wrapper.find("button.delete-name").trigger("click");
+
+    expect(wrapper.text()).not.toContain("Boris");
+  });
 })

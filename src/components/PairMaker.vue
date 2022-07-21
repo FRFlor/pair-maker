@@ -2,7 +2,7 @@
 import usePairMaking from "@/composables/usePairMaking";
 import {ref} from "vue";
 
-const {names, addNewNameToList} = usePairMaking();
+const {names, addNewNameToList, deleteName} = usePairMaking();
 const newName = ref<string>("");
 
 function saveNewName() {
@@ -21,7 +21,10 @@ function saveNewName() {
 
     <ul id="all-names-list">
       <h2>All Names</h2>
-      <li v-for="name in names" :key="name">{{ name }}</li>
+      <li v-for="name in names" :key="name">
+        <p>{{ name }}</p>
+        <button class="delete-name" @click="() => deleteName(name)">X</button>
+      </li>
     </ul>
 
     <ul id="pairs-list">
