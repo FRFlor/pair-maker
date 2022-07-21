@@ -52,5 +52,31 @@ describe("Use Pair Making", () => {
 
         expect(names.value).toHaveLength(0);
     })
-})
 
+    describe("Propose Pairing", () => {
+        it("returns empty when there are no names", () => {
+            const {proposePairing} = usePairMaking();
+
+            expect(proposePairing()).toEqual({})
+        });
+
+        it("pairs 2 names together", () => {
+            const namesInLocalStorage = ["Ana", "Boris"];
+            localStorage.setItem("names", JSON.stringify(namesInLocalStorage));
+            const {proposePairing} = usePairMaking();
+
+            expect(proposePairing()).toEqual({"Ana": "Boris"})
+        });
+
+
+        it("pairs 2 names together and leaves 1 in timeout when there is an odd number of names", () => {
+            const namesInLocalStorage = ["Ana", "Boris", "Charlie"];
+            localStorage.setItem("names", JSON.stringify(namesInLocalStorage));
+            const {proposePairing} = usePairMaking();
+
+            const pairs = proposePairing();
+            expect(Object.values(pairs)).toContain("Timeout");
+        });
+    })
+
+})

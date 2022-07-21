@@ -27,9 +27,30 @@ export default function usePairMaking() {
         saveNames();
     }
 
+    function proposePairing() {
+        if (names.value.length === 0) {
+            return {};
+        }
+
+        if (names.value.length === 1) {
+            return {[names.value[0]]: "Timeout"}
+        }
+
+        if (names.value.length === 2) {
+            names.value.sort();
+            return {[names.value[0]]: names.value[1]}
+        }
+
+        return {
+            [names.value[0]]: names.value[1],
+            [names.value[2]]: "Timeout",
+        }
+    }
+
     return {
         names,
         addNewNameToList,
-        deleteName
+        deleteName,
+        proposePairing
     }
 }
