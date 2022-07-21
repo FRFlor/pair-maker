@@ -1,10 +1,19 @@
 <script lang="ts" setup>
 import usePairMaking from "@/composables/usePairMaking";
-import {ref} from "vue";
+import {computed, ref} from "vue";
+import {Pairing} from "@/types";
 
-const {names, addNewNameToList, deleteName, proposePairing} = usePairMaking();
+const {names, addNewNameToList, deleteName, proposePairing, savePairing} = usePairMaking();
 const newName = ref<string>("");
-const proposedPairings = ref<string[]>([]);
+
+const proposedPairings = ref<Pairing>({});
+const proposedPairingList = computed<string[]>(() => {
+  return Object.keys(proposedPairings.value)
+      .map((rightHandSide: string) => {
+        let leftHandSide = proposedPairings.value[rightHandSide];
+        return leftHandSide === "Timeout" ? `TIMEOUT: ${rightHandSide}` : `${rightHandSide} and ${leftHandSide}`;
+      });
+})
 
 function saveNewName() {
   addNewNameToList(newName.value);
@@ -12,12 +21,12 @@ function saveNewName() {
 }
 
 function displayProposedPairings() {
-  const pairings = proposePairing();
-  proposedPairings.value = Object.keys(pairings)
-      .map((rightHandSide: string) => {
-        let leftHandSide = pairings[rightHandSide];
-        return leftHandSide === "Timeout" ? `TIMEOUT: ${rightHandSide}` : `${rightHandSide} and ${leftHandSide}`;
-      });
+  proposedPairings.value = proposePairing();
+}
+
+function saveProposedPairings() {
+  savePairing(proposedPairings.value);
+  window.alert("Pairings saved!");
 }
 
 </script>
@@ -40,7 +49,8 @@ function displayProposedPairings() {
     <ul id="pairs-list">
       <h2>Pairs</h2>
       <button id="see-proposed-pairings" @click="displayProposedPairings">Propose pairs</button>
-      <li v-for="proposedPairing in proposedPairings" :key="proposedPairing">{{ proposedPairing }}</li>
+      <button id="save-proposed-pairing" @click="saveProposedPairings">Save pairs</button>
+      <li v-for="proposedPairing in proposedPairingList" :key="proposedPairing">{{ proposedPairing }}</li>
     </ul>
   </section>
 </template>
