@@ -12,5 +12,25 @@ describe("Use Pair Making", () => {
         addNewNameToList("Boris");
         expect(names.value).toContain("Boris");
     });
+
+    describe("Data persistence", () => {
+        it("Stores the names in Local Storage", () => {
+            const {names, addNewNameToList} = usePairMaking();
+            addNewNameToList("Boris");
+
+            expect(localStorage.getItem("names")).toEqual(JSON.stringify(names.value));
+            expect(localStorage.getItem("names")).toContain("Boris");
+        });
+
+        it("Retrieves names from Local Storage automatically upon instantiation", () => {
+            const namesInLocalStorage = ["Ana", "Boris", "Clara"];
+            localStorage.setItem("names", JSON.stringify(namesInLocalStorage));
+
+            const {names, addNewNameToList} = usePairMaking();
+
+            namesInLocalStorage.forEach(nameInLocalStorage => expect(names.value).toContain(nameInLocalStorage));
+        });
+    })
+
 })
 
