@@ -1,5 +1,5 @@
 export interface Pairing {
-    [name: string]: string | "Timeout"
+    [name: string]: string
 }
 
 export interface PairingHistory {

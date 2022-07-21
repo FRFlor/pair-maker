@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import usePairMaking from "@/composables/usePairMaking";
+import usePairMaking, {TIMEOUT} from "@/composables/usePairMaking";
 import {computed, ref} from "vue";
 import {Pairing} from "@/types";
 
@@ -11,7 +11,7 @@ const proposedPairingList = computed<string[]>(() => {
   return Object.keys(proposedPairings.value)
       .map((rightHandSide: string) => {
         let leftHandSide = proposedPairings.value[rightHandSide];
-        return leftHandSide === "Timeout" ? `TIMEOUT: ${rightHandSide}` : `${rightHandSide} and ${leftHandSide}`;
+        return leftHandSide === TIMEOUT ? `TIMEOUT: ${rightHandSide}` : `${rightHandSide} and ${leftHandSide}`;
       });
 })
 

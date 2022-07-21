@@ -1,4 +1,4 @@
-import usePairMaking from "@/composables/usePairMaking";
+import usePairMaking, {TIMEOUT} from "@/composables/usePairMaking";
 
 describe("Use Pair Making", () => {
     beforeEach(() => {
@@ -97,7 +97,7 @@ describe("Use Pair Making", () => {
             const {proposePairing} = usePairMaking();
 
             const pairs = proposePairing();
-            expect(Object.values(pairs)).toContain("Timeout");
+            expect(Object.values(pairs)).toContain(TIMEOUT);
         });
 
         it("pairs everyone that is participating", () => {
@@ -141,7 +141,7 @@ describe("Use Pair Making", () => {
         localStorage.setItem("names", JSON.stringify(namesInLocalStorage));
         const {savePairing, pairingHistory} = usePairMaking();
 
-        savePairing({"Ana": "Boris", "Charlie": "Timeout"});
+        savePairing({"Ana": "Boris", "Charlie": TIMEOUT});
 
         expect(pairingHistory.value).toEqual({
             "Ana": ["Boris"],

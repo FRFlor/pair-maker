@@ -2,6 +2,8 @@ import {ref} from "vue";
 import {Pairing, PairingHistory} from "@/types";
 import {RNG} from "@/helpers/RNG";
 
+export const TIMEOUT = "Timeout";
+
 
 export default function usePairMaking() {
     function loadNames() {
@@ -60,7 +62,7 @@ export default function usePairMaking() {
         }
 
         if (namesUnpaired.length === 1) {
-            proposedPairing[namesUnpaired[0]] = "Timeout";
+            proposedPairing[namesUnpaired[0]] = TIMEOUT;
         }
 
         return proposedPairing;
@@ -72,7 +74,7 @@ export default function usePairMaking() {
         for (const rightSideName of Object.keys(pairing)) {
             const leftSideName = pairing[rightSideName];
 
-            if (leftSideName === "Timeout" || rightSideName === "Timeout") {
+            if (leftSideName === TIMEOUT || rightSideName === TIMEOUT) {
                 continue;
             }
 
