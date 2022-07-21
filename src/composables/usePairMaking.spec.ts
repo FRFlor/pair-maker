@@ -109,7 +109,7 @@ describe("Use Pair Making", () => {
             const namesPairedUp = [...Object.keys(pairs), ...Object.values(pairs)];
             namesInLocalStorage.forEach((name) => expect(namesPairedUp).toContain(name));
         })
-        0
+
         it("does not pair people who have paired in the past", () => {
             const namesInLocalStorage = ["Ana", "Boris", "Charlie"];
             localStorage.setItem("names", JSON.stringify(namesInLocalStorage));
@@ -129,6 +129,19 @@ describe("Use Pair Making", () => {
         const {savePairing, pairingHistory} = usePairMaking();
 
         savePairing({"Ana": "Boris"});
+
+        expect(pairingHistory.value).toEqual({
+            "Ana": ["Boris"],
+            "Boris": ["Ana"]
+        })
+    });
+
+    it("Does not save timeout in the history", () => {
+        const namesInLocalStorage = ["Ana", "Boris", "Charlie"];
+        localStorage.setItem("names", JSON.stringify(namesInLocalStorage));
+        const {savePairing, pairingHistory} = usePairMaking();
+
+        savePairing({"Ana": "Boris", "Charlie": "Timeout"});
 
         expect(pairingHistory.value).toEqual({
             "Ana": ["Boris"],

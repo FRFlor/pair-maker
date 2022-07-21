@@ -72,6 +72,10 @@ export default function usePairMaking() {
         for (const rightSideName of Object.keys(pairing)) {
             const leftSideName = pairing[rightSideName];
 
+            if (leftSideName === "Timeout" || rightSideName === "Timeout") {
+                continue;
+            }
+
             if (!newHistory[rightSideName]) {
                 newHistory[rightSideName] = [];
             }
