@@ -47,7 +47,7 @@ function saveProposedPairings() {
     </ul>
 
     <ul id="pairs-list">
-      <h2>Pairs</h2>
+      <h2>Proposed Pairs</h2>
       <button id="see-proposed-pairings" @click="displayProposedPairings">Propose pairs</button>
       <button id="save-proposed-pairing" @click="saveProposedPairings">Save pairs</button>
       <li v-for="proposedPairing in proposedPairingList" :key="proposedPairing">{{ proposedPairing }}</li>
