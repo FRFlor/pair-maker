@@ -79,4 +79,17 @@ describe("Use Pair Making", () => {
         });
     })
 
+    it("allows a pairing to be saved", () => {
+        const namesInLocalStorage = ["Ana", "Boris"];
+        localStorage.setItem("names", JSON.stringify(namesInLocalStorage));
+        const {savePairing, pairingHistory} = usePairMaking();
+
+        savePairing({"Ana": "Boris"});
+
+        expect(pairingHistory.value).toEqual({
+            "Ana": ["Boris"],
+            "Boris": ["Ana"]
+        })
+
+    });
 })

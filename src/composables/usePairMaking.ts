@@ -1,4 +1,5 @@
 import {ref} from "vue";
+import {Pairing, PairingHistory} from "@/types";
 
 
 export default function usePairMaking() {
@@ -11,6 +12,7 @@ export default function usePairMaking() {
     }
 
     const names = ref<string[]>(loadNames());
+    const pairingHistory = ref<PairingHistory>({});
 
     function addNewNameToList(newName: string) {
         const sanitizedName = newName.trim();
@@ -27,7 +29,7 @@ export default function usePairMaking() {
         saveNames();
     }
 
-    function proposePairing() {
+    function proposePairing(): Pairing {
         if (names.value.length === 0) {
             return {};
         }
@@ -47,10 +49,34 @@ export default function usePairMaking() {
         }
     }
 
+    function savePairing(pairing: Pairing) {
+        const newHistory = {...pairingHistory.value};
+
+        for (const rightSideName of Object.keys(pairing)) {
+            const leftSideName = pairing[rightSideName];
+
+            if (!newHistory[rightSideName]) {
+                newHistory[rightSideName] = [];
+            }
+
+            if (!newHistory[leftSideName]) {
+                newHistory[leftSideName] = [];
+            }
+
+            newHistory[rightSideName].push(leftSideName);
+            newHistory[leftSideName].push(rightSideName);
+        }
+
+        pairingHistory.value = newHistory;
+    }
+
+
     return {
         names,
+        pairingHistory,
         addNewNameToList,
         deleteName,
-        proposePairing
+        proposePairing,
+        savePairing
     }
 }
