@@ -1,6 +1,10 @@
 import usePairMaking from "@/composables/usePairMaking";
 
 describe("Use Pair Making", () => {
+    beforeEach(() => {
+        localStorage.clear();
+    })
+
     it("Starts with an empty list", () => {
         const {names} = usePairMaking();
 
