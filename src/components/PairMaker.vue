@@ -17,9 +17,8 @@ const proposedPairingList = computed<string[]>(() => {
 
 const pairingHistoryList = computed<string[]>(() => {
   return Object.keys(pairingHistory.value)
-      .map((name: string) => {
-        return `${name}: ${pairingHistory.value[name]}`
-      });
+      .map((name: string) => `${name}: `
+          + JSON.stringify(pairingHistory.value[name]).replaceAll("\"", ""));
 })
 
 function saveNewName() {
