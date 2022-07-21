@@ -38,6 +38,7 @@ function displayProposedPairings() {
   try {
     proposedPairings.value = proposePairing();
   } catch (e) {
+    proposedPairings.value = {};
     errors.value = (e as Error).message;
   }
 
@@ -63,8 +64,8 @@ function saveProposedPairings() {
       <h2>All Names</h2>
       <ul>
         <li v-for="name in names" :key="name">
-          <p>{{ name }}</p>
           <button class="delete-name" @click="() => deleteName(name)">X</button>
+          <p>{{ name }}</p>
         </li>
       </ul>
     </div>
@@ -129,7 +130,13 @@ section {
   grid-area: pairs
 }
 
+ul {
+  list-style: none;
+  padding: 0;
+}
+
 li {
+
   display: flex;
   justify-content: space-between;
   align-items: center;
