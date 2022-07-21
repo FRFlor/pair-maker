@@ -34,6 +34,15 @@ describe("Use Pair Making", () => {
 
             namesInLocalStorage.forEach(nameInLocalStorage => expect(names.value).toContain(nameInLocalStorage));
         });
+
+        it("Prevents duplicated names", () => {
+            const {names, addNewNameToList} = usePairMaking();
+
+            addNewNameToList("Boris");
+
+            expect(() => addNewNameToList("Boris")).toThrowError("Each name must be unique.")
+            expect(names.value).toHaveLength(1);
+        })
     })
 })
 

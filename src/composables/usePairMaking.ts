@@ -5,7 +5,12 @@ export default function usePairMaking() {
     const names = ref<string[]>(currentNamesInLocalStorage);
 
     function addNewNameToList(newName: string) {
-        names.value.push(newName);
+        const sanitizedName = newName.trim();
+        if (names.value.includes(sanitizedName)) {
+            throw Error("Each name must be unique.");
+        }
+
+        names.value.push(sanitizedName);
         localStorage.setItem("names", JSON.stringify(names.value))
     }
 
