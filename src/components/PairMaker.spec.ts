@@ -72,4 +72,19 @@ describe('PairMaker.vue', () => {
                 expect(proposedPair.text()).not.toContain(originalProposedPair))
         }
     });
+
+    it("Displays pairing history", async () => {
+        window.alert = jest.fn();
+        const namesInLocalStorage = ["Ana", "Boris", "Clara", "Daniel"];
+        localStorage.setItem("names", JSON.stringify(namesInLocalStorage));
+        wrapper = mount(PairMaker)
+
+        await wrapper.find("button#see-proposed-pairings").trigger("click");
+
+        await wrapper.find("button#save-proposed-pairing").trigger("click");
+
+        namesInLocalStorage.forEach(name =>
+            expect(wrapper.find('#pairing-history').text()).toContain(name));
+
+    });
 })

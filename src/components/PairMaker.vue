@@ -3,7 +3,7 @@ import usePairMaking from "@/composables/usePairMaking";
 import {computed, ref} from "vue";
 import {Pairing} from "@/types";
 
-const {names, addNewNameToList, deleteName, proposePairing, savePairing} = usePairMaking();
+const {names, pairingHistory, addNewNameToList, deleteName, proposePairing, savePairing} = usePairMaking();
 const newName = ref<string>("");
 
 const proposedPairings = ref<Pairing>({});
@@ -12,6 +12,13 @@ const proposedPairingList = computed<string[]>(() => {
       .map((rightHandSide: string) => {
         let leftHandSide = proposedPairings.value[rightHandSide];
         return leftHandSide === "Timeout" ? `TIMEOUT: ${rightHandSide}` : `${rightHandSide} and ${leftHandSide}`;
+      });
+})
+
+const pairingHistoryList = computed<string[]>(() => {
+  return Object.keys(pairingHistory.value)
+      .map((name: string) => {
+        return `${name}: ${pairingHistory.value[name]}`
       });
 })
 
@@ -52,6 +59,11 @@ function saveProposedPairings() {
       <button id="save-proposed-pairing" @click="saveProposedPairings">Save pairs</button>
       <li v-for="proposedPairing in proposedPairingList" :key="proposedPairing">{{ proposedPairing }}</li>
     </ul>
+
+    <ul id="pairing-history">
+      <h2>Pairing History</h2>
+      <li v-for="pairingHistoryEntry in pairingHistoryList" :key="pairingHistoryEntry">{{ pairingHistoryEntry }}</li>
+    </ul>
   </section>
 </template>
 
@@ -60,9 +72,9 @@ section {
   display: grid;
   grid-template-areas:
         "input input input"
-        "names .     pairs"
-        "names .     pairs"
-        "names .     pairs"
+        "names pairs history"
+        "names pairs history"
+        "names pairs history"
 }
 
 #new-name-input-group {
