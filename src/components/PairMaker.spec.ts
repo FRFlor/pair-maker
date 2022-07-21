@@ -87,4 +87,18 @@ describe('PairMaker.vue', () => {
             expect(wrapper.find('#pairing-history').text()).toContain(name));
 
     });
+
+    it("Displays errors", async () => {
+        const namesInLocalStorage = ["Ana", "Boris"];
+        localStorage.setItem("names", JSON.stringify(namesInLocalStorage));
+        wrapper = mount(PairMaker)
+
+        expect(wrapper.find('#errors').text()).toEqual("");
+
+        await wrapper.find("button#see-proposed-pairings").trigger("click");
+        await wrapper.find("button#save-proposed-pairing").trigger("click");
+        await wrapper.find("button#see-proposed-pairings").trigger("click");
+
+        expect(wrapper.find('#errors').text()).not.toEqual("");
+    })
 })

@@ -5,6 +5,7 @@ import {Pairing} from "@/types";
 
 const {names, pairingHistory, addNewNameToList, deleteName, proposePairing, savePairing} = usePairMaking();
 const newName = ref<string>("");
+const errors = ref<string>("");
 
 const proposedPairings = ref<Pairing>({});
 const proposedPairingList = computed<string[]>(() => {
@@ -22,15 +23,27 @@ const pairingHistoryList = computed<string[]>(() => {
 })
 
 function saveNewName() {
-  addNewNameToList(newName.value);
-  newName.value = "";
+  errors.value = "";
+  try {
+    addNewNameToList(newName.value);
+    newName.value = "";
+  } catch (e) {
+    errors.value = (e as Error).message;
+  }
 }
 
 function displayProposedPairings() {
-  proposedPairings.value = proposePairing();
+  errors.value = "";
+  try {
+    proposedPairings.value = proposePairing();
+  } catch (e) {
+    errors.value = (e as Error).message;
+  }
+
 }
 
 function saveProposedPairings() {
+  errors.value = "";
   savePairing(proposedPairings.value);
   window.alert("Pairings saved!");
 }
@@ -39,6 +52,7 @@ function saveProposedPairings() {
 
 <template>
   <section>
+    <p id="errors">{{ errors }}</p>
     <form id="new-name-input-group" @submit.prevent>
       <input id="new-name" v-model="newName" type="text">
       <button id="add-name" :disabled="newName.trim().length === 0" @click="saveNewName">Save Name</button>
@@ -79,13 +93,26 @@ section {
   grid-gap: 3rem;
   grid-template-areas:
         "input input input"
+        "errors errors errors"
         "names pairs history"
         "names pairs history"
         "names pairs history"
 }
 
+#errors {
+  grid-area: errors;
+  color: darkred;
+  text-align: center;
+  font-size: large;
+}
+
 #new-name-input-group {
-  grid-area: input
+  grid-area: input;
+  display: flex;
+}
+
+#new-name-input-group input {
+  flex: 1;
 }
 
 #all-names-list {
