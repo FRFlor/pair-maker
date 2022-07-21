@@ -43,4 +43,13 @@ describe('PairMaker.vue', () => {
 
     expect(wrapper.text()).not.toContain("Boris");
   });
+
+  it("Displays proposed pairings", async () => {
+    const namesInLocalStorage = ["Ana", "Boris", "Clara", "Daniel"];
+    localStorage.setItem("names", JSON.stringify(namesInLocalStorage));
+    wrapper = mount(PairMaker)
+
+    await wrapper.find("button#see-proposed-pairings").trigger("click");
+    namesInLocalStorage.forEach(name => expect(wrapper.find('#pairs-list').text()).toContain(name));
+  });
 })
