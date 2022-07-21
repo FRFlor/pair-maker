@@ -135,18 +135,35 @@ describe("Use Pair Making", () => {
         })
     })
 
-    it("allows a pairing to be saved", () => {
-        const namesInLocalStorage = ["Ana", "Boris"];
-        localStorage.setItem("names", JSON.stringify(namesInLocalStorage));
-        const {savePairing, pairingHistory} = usePairMaking();
+    describe("Saving parings", () => {
+        it("allows a pairing to be saved", () => {
+            const namesInLocalStorage = ["Ana", "Boris"];
+            localStorage.setItem("names", JSON.stringify(namesInLocalStorage));
+            const {savePairing, pairingHistory} = usePairMaking();
 
-        savePairing({"Ana": "Boris"});
+            savePairing({"Ana": "Boris"});
 
-        expect(pairingHistory.value).toEqual({
-            "Ana": ["Boris"],
-            "Boris": ["Ana"]
-        })
-    });
+            expect(pairingHistory.value).toEqual({
+                "Ana": ["Boris"],
+                "Boris": ["Ana"]
+            })
+        });
+
+        it("does not allow duplication when saving pairs", () => {
+            const namesInLocalStorage = ["Ana", "Boris"];
+            localStorage.setItem("names", JSON.stringify(namesInLocalStorage));
+            const {savePairing, pairingHistory} = usePairMaking();
+
+            savePairing({"Ana": "Boris"});
+            savePairing({"Ana": "Boris"});
+
+            expect(pairingHistory.value).toEqual({
+                "Ana": ["Boris"],
+                "Boris": ["Ana"]
+            })
+        });
+    })
+
 
     it("Does not save timeout in the history", () => {
         const namesInLocalStorage = ["Ana", "Boris", "Charlie"];

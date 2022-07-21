@@ -104,6 +104,10 @@ export default function usePairMaking() {
                 continue;
             }
 
+            if ((pairingHistory.value[leftSideName] ?? []).includes(rightSideName)) {
+                continue;
+            }
+
             if (!newHistory[rightSideName]) {
                 newHistory[rightSideName] = [];
             }
