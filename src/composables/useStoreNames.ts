@@ -1,20 +1,20 @@
 import {ref} from "vue";
 import {useMakePairs} from "@/composables/useMakePairs";
 
-function loadNames() {
-    return JSON.parse(localStorage.getItem("names") ?? "[]");
-}
-
-function saveNames() {
-    localStorage.setItem("names", JSON.stringify(names.value))
-}
-
 export const TIMEOUT = "Timeout";
 const names = ref<string[]>([]);
 
-export default function usePairMaking() {
+export default function useStoreNames() {
     names.value = loadNames();
     const {pairingHistory, savePairing, proposePairing} = useMakePairs(names);
+
+    function loadNames() {
+        return JSON.parse(localStorage.getItem("names") ?? "[]");
+    }
+
+    function saveNames() {
+        localStorage.setItem("names", JSON.stringify(names.value))
+    }
 
     function addNewNameToList(newName: string) {
         const sanitizedName = newName.trim();

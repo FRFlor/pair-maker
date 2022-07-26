@@ -1,28 +1,28 @@
-import usePairMaking, {TIMEOUT} from "@/composables/usePairMaking";
+import useStoreNames, {TIMEOUT} from "@/composables/useStoreNames";
 
 describe("Use Pair Making", () => {
     beforeEach(() => {
         localStorage.clear();
-        const {names, pairingHistory} = usePairMaking();
+        const {names, pairingHistory} = useStoreNames();
         names.value = [];
         pairingHistory.value = {};
     })
 
     it("Starts with an empty list", () => {
-        const {names} = usePairMaking();
+        const {names} = useStoreNames();
 
         expect(names.value).toEqual([]);
     });
 
     it("Allows a new name to be added to the list", () => {
-        const {names, addNewNameToList} = usePairMaking();
+        const {names, addNewNameToList} = useStoreNames();
         addNewNameToList("Boris");
         expect(names.value).toContain("Boris");
     });
 
     describe("Data persistence", () => {
         it("Stores the names in Local Storage", () => {
-            const {names, addNewNameToList} = usePairMaking();
+            const {names, addNewNameToList} = useStoreNames();
             addNewNameToList("Boris");
 
             expect(localStorage.getItem("names")).toEqual(JSON.stringify(names.value));
@@ -33,7 +33,7 @@ describe("Use Pair Making", () => {
             const namesInLocalStorage = ["Ana", "Boris", "Clara"];
             localStorage.setItem("names", JSON.stringify(namesInLocalStorage));
 
-            const {names} = usePairMaking();
+            const {names} = useStoreNames();
 
             namesInLocalStorage.forEach(nameInLocalStorage => expect(names.value).toContain(nameInLocalStorage));
         });
@@ -41,7 +41,7 @@ describe("Use Pair Making", () => {
         it("Stores the pairingHistory in Local Storage", () => {
             const namesInLocalStorage = ["Ana", "Boris"];
             localStorage.setItem("names", JSON.stringify(namesInLocalStorage));
-            const {savePairing, pairingHistory} = usePairMaking();
+            const {savePairing, pairingHistory} = useStoreNames();
             savePairing({"Ana": "Boris"});
 
             expect(localStorage.getItem("pairingHistory")).toEqual(JSON.stringify(pairingHistory.value));
@@ -53,7 +53,7 @@ describe("Use Pair Making", () => {
                 "Boris": ["Ana"]
             }));
 
-            const {pairingHistory} = usePairMaking();
+            const {pairingHistory} = useStoreNames();
             expect(pairingHistory.value).toEqual({
                 "Ana": ["Boris"],
                 "Boris": ["Ana"]
@@ -62,7 +62,7 @@ describe("Use Pair Making", () => {
     })
 
     it("Prevents duplicated names", () => {
-        const {names, addNewNameToList} = usePairMaking();
+        const {names, addNewNameToList} = useStoreNames();
 
         addNewNameToList("Boris");
 
@@ -71,7 +71,7 @@ describe("Use Pair Making", () => {
     })
 
     it("Allows a name to be deleted", () => {
-        const {names, addNewNameToList, deleteName} = usePairMaking();
+        const {names, addNewNameToList, deleteName} = useStoreNames();
         addNewNameToList("Boris");
         deleteName("Boris");
 
@@ -80,7 +80,7 @@ describe("Use Pair Making", () => {
 
     describe("Propose Pairing", () => {
         it("returns empty when there are no names", () => {
-            const {proposePairing} = usePairMaking();
+            const {proposePairing} = useStoreNames();
 
             expect(proposePairing()).toEqual({})
         });
@@ -88,7 +88,7 @@ describe("Use Pair Making", () => {
         it("pairs 2 names together", () => {
             const namesInLocalStorage = ["Ana", "Boris"];
             localStorage.setItem("names", JSON.stringify(namesInLocalStorage));
-            const {proposePairing} = usePairMaking();
+            const {proposePairing} = useStoreNames();
 
             expect(proposePairing()).toEqual({"Ana": "Boris"})
         });
@@ -97,7 +97,7 @@ describe("Use Pair Making", () => {
         it("pairs 2 names together and leaves 1 in timeout when there is an odd number of names", () => {
             const namesInLocalStorage = ["Ana", "Boris", "Charlie"];
             localStorage.setItem("names", JSON.stringify(namesInLocalStorage));
-            const {proposePairing} = usePairMaking();
+            const {proposePairing} = useStoreNames();
 
             const pairs = proposePairing();
             expect(Object.values(pairs)).toContain(TIMEOUT);
@@ -106,7 +106,7 @@ describe("Use Pair Making", () => {
         it("pairs everyone that is participating", () => {
             const namesInLocalStorage = ["Ana", "Boris", "Charlie", "Daniel", "Elias", "Felipe", "Gerald"];
             localStorage.setItem("names", JSON.stringify(namesInLocalStorage));
-            const {proposePairing} = usePairMaking();
+            const {proposePairing} = useStoreNames();
             const pairs = proposePairing();
 
             const namesPairedUp = [...Object.keys(pairs), ...Object.values(pairs)];
@@ -116,7 +116,7 @@ describe("Use Pair Making", () => {
         it("does not pair people who have paired in the past", () => {
             const namesInLocalStorage = ["Ana", "Boris", "Charlie"];
             localStorage.setItem("names", JSON.stringify(namesInLocalStorage));
-            const {savePairing, proposePairing} = usePairMaking();
+            const {savePairing, proposePairing} = useStoreNames();
             savePairing({"Ana": "Boris"});
 
             for (let i = 0; i < 10000; i++) {
@@ -128,7 +128,7 @@ describe("Use Pair Making", () => {
         it("throws error when finding new pairs is impossible", () => {
             const namesInLocalStorage = ["Ana", "Boris"];
             localStorage.setItem("names", JSON.stringify(namesInLocalStorage));
-            const {savePairing, proposePairing} = usePairMaking();
+            const {savePairing, proposePairing} = useStoreNames();
             savePairing({"Ana": "Boris"});
 
             expect(() => proposePairing()).toThrowError();
@@ -139,7 +139,7 @@ describe("Use Pair Making", () => {
         it("allows a pairing to be saved", () => {
             const namesInLocalStorage = ["Ana", "Boris"];
             localStorage.setItem("names", JSON.stringify(namesInLocalStorage));
-            const {savePairing, pairingHistory} = usePairMaking();
+            const {savePairing, pairingHistory} = useStoreNames();
 
             savePairing({"Ana": "Boris"});
 
@@ -152,7 +152,7 @@ describe("Use Pair Making", () => {
         it("does not allow duplication when saving pairs", () => {
             const namesInLocalStorage = ["Ana", "Boris"];
             localStorage.setItem("names", JSON.stringify(namesInLocalStorage));
-            const {savePairing, pairingHistory} = usePairMaking();
+            const {savePairing, pairingHistory} = useStoreNames();
 
             savePairing({"Ana": "Boris"});
             savePairing({"Ana": "Boris"});
@@ -168,7 +168,7 @@ describe("Use Pair Making", () => {
     it("Does not save timeout in the history", () => {
         const namesInLocalStorage = ["Ana", "Boris", "Charlie"];
         localStorage.setItem("names", JSON.stringify(namesInLocalStorage));
-        const {savePairing, pairingHistory} = usePairMaking();
+        const {savePairing, pairingHistory} = useStoreNames();
 
         savePairing({"Ana": "Boris", "Charlie": TIMEOUT});
 

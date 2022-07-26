@@ -1,10 +1,10 @@
 import {mount} from "@vue/test-utils";
 import AddToPairingHistory from "@/components/AddToPairingHistory.vue";
-import usePairMaking from "@/composables/usePairMaking";
+import useStoreNames from "@/composables/useStoreNames";
 
 describe('AddToPairingHistory', () => {
     it('populates the select options with all the member names', () => {
-        const {addNewNameToList} = usePairMaking();
+        const {addNewNameToList} = useStoreNames();
         const names = ["Alice", "Bob"];
         names.forEach((name) => addNewNameToList(name));
         const wrapper = mount(AddToPairingHistory);

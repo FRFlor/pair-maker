@@ -1,10 +1,10 @@
 <script lang="ts" setup>
-import usePairMaking, {TIMEOUT} from "@/composables/usePairMaking";
+import useStoreNames, {TIMEOUT} from "@/composables/useStoreNames";
 import {computed, ref} from "vue";
 import {Pairing} from "@/types";
 import AddToPairingHistory from "@/components/AddToPairingHistory.vue";
 
-const {names, pairingHistory, addNewNameToList, deleteName, proposePairing, savePairing} = usePairMaking();
+const {names, pairingHistory, addNewNameToList, deleteName, proposePairing, savePairing} = useStoreNames();
 const newName = ref<string>("");
 const errors = ref<string>("");
 
