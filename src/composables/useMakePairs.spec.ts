@@ -1,5 +1,6 @@
-import useStoreNames, {TIMEOUT} from "@/composables/useStoreNames";
+import useStoreNames from "@/composables/useStoreNames";
 import {useMakePairs} from "@/composables/useMakePairs";
+import {TIMEOUT} from "@/constants";
 
 function getMakePairsComposable(startingNames: string[] = []) {
     localStorage.clear();

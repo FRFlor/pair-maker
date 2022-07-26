@@ -1,6 +1,5 @@
 import {ref} from "vue";
 
-export const TIMEOUT = "Timeout";
 const names = ref<string[]>([]);
 
 export default function useStoreNames() {

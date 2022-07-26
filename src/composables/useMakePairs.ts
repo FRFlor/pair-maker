@@ -1,7 +1,7 @@
 import {Ref, ref} from "vue";
 import {Pairing, PairingHistory} from "@/types";
 import {RNG} from "@/helpers/RNG";
-import {TIMEOUT} from "@/composables/useStoreNames";
+import {TIMEOUT} from "@/constants";
 
 const pairingHistory = ref<PairingHistory>({});
 
