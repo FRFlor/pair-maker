@@ -50,7 +50,6 @@ function displayProposedPairings() {
 function saveProposedPairings() {
   errors.value = "";
   savePairing(proposedPairings.value);
-  window.alert("Pairings saved!");
 }
 
 </script>

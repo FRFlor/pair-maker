@@ -54,7 +54,6 @@ describe('PairMaker.vue', () => {
     });
 
     it("allows a proposed pairing to be saved", async () => {
-        window.alert = jest.fn();
         const namesInLocalStorage = ["Ana", "Boris", "Clara", "Daniel"];
         localStorage.setItem("names", JSON.stringify(namesInLocalStorage));
         wrapper = mount(PairMaker)
@@ -62,9 +61,6 @@ describe('PairMaker.vue', () => {
         await wrapper.find("button#see-proposed-pairings").trigger("click");
         const originalProposedPair = wrapper.find('#pairs-list li').text();
         await wrapper.find("button#save-proposed-pairing").trigger("click");
-
-
-        expect(window.alert).toHaveBeenCalled();
 
         for (let i = 0; i < 300; i++) {
             await wrapper.find("button#see-proposed-pairings").trigger("click");
@@ -74,7 +70,6 @@ describe('PairMaker.vue', () => {
     });
 
     it("Displays pairing history", async () => {
-        window.alert = jest.fn();
         const namesInLocalStorage = ["Ana", "Boris", "Clara", "Daniel"];
         localStorage.setItem("names", JSON.stringify(namesInLocalStorage));
         wrapper = mount(PairMaker)
