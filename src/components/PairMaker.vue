@@ -3,8 +3,10 @@ import useStoreNames, {TIMEOUT} from "@/composables/useStoreNames";
 import {computed, ref} from "vue";
 import {Pairing} from "@/types";
 import AddToPairingHistory from "@/components/AddToPairingHistory.vue";
+import {useMakePairs} from "@/composables/useMakePairs";
 
-const {names, pairingHistory, addNewNameToList, deleteName, proposePairing, savePairing} = useStoreNames();
+const {names, addNewNameToList, deleteName} = useStoreNames();
+const {pairingHistory, proposePairing, savePairing} = useMakePairs(names);
 const newName = ref<string>("");
 const errors = ref<string>("");
 

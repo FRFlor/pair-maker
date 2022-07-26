@@ -3,9 +3,8 @@ import useStoreNames from "@/composables/useStoreNames";
 describe("useStoreNames", () => {
     beforeEach(() => {
         localStorage.clear();
-        const {names, pairingHistory} = useStoreNames();
+        const {names} = useStoreNames();
         names.value = [];
-        pairingHistory.value = {};
     })
 
     it("Starts with an empty list", () => {

@@ -1,8 +1,10 @@
 <script lang="ts" setup>
 import useStoreNames from "@/composables/useStoreNames";
 import {computed, ref} from "vue";
+import {useMakePairs} from "@/composables/useMakePairs";
 
-const {names, savePairing} = useStoreNames();
+const {names} = useStoreNames();
+const {savePairing} = useMakePairs(names);
 
 const leftHandSide = ref(names.value[0] ?? "");
 
