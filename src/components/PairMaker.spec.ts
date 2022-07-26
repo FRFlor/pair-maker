@@ -102,7 +102,7 @@ describe('PairMaker.vue', () => {
         expect(wrapper.find('#errors').text()).not.toEqual("");
     })
 
-    xit("Allows Manual Entries to the Pairing History", async () => {
+    it("Allows Manual Entries to the Pairing History", async () => {
         const namesInLocalStorage = ["Ana", "Boris"];
         localStorage.setItem("names", JSON.stringify(namesInLocalStorage));
         wrapper = mount(PairMaker)
