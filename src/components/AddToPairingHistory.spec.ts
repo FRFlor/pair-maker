@@ -1,11 +1,9 @@
-import {mount, VueWrapper} from "@vue/test-utils";
+import {VueWrapper} from "@vue/test-utils";
 import AddToPairingHistory from "@/components/AddToPairingHistory.vue";
 import useStoreNames from "@/composables/useStoreNames";
 import {useMakePairs} from "@/composables/useMakePairs";
-import PrimeVue from "primevue/config";
-import ToggleButton from "primevue/togglebutton";
 import Dropdown from "primevue/dropdown";
-import Button from "primevue/button";
+import {mountComponentWithPrimeVue} from "../../testHelpers";
 
 describe('AddToPairingHistory', () => {
     it('populates the select options with all the member names', async () => {
@@ -40,12 +38,7 @@ function getWrapper(startingNames: string[] = []) {
     pairingHistory.value = {};
     startingNames.forEach(name => addNewNameToList(name));
 
-    return mount(AddToPairingHistory, {
-        global: {
-            plugins: [PrimeVue],
-            components: {ToggleButton, Dropdown, Button}
-        }
-    });
+    return mountComponentWithPrimeVue(AddToPairingHistory);
 }
 
 async function selectNameInDropdown(wrapper: VueWrapper, name: string) {

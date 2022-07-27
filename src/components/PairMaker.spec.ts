@@ -1,9 +1,6 @@
-import {mount, VueWrapper} from '@vue/test-utils'
+import {VueWrapper} from '@vue/test-utils'
 import PairMaker from '@/components/PairMaker.vue'
-import PrimeVue from "primevue/config";
-import ToggleButton from "primevue/togglebutton";
-import Dropdown from "primevue/dropdown";
-import Button from "primevue/button";
+import {mountComponentWithPrimeVue} from "../../testHelpers";
 
 describe('PairMaker.vue', () => {
     let wrapper: VueWrapper;
@@ -99,10 +96,5 @@ function getWrapper(initialNames: string[]): VueWrapper {
     localStorage.clear();
     localStorage.setItem("names", JSON.stringify(initialNames));
 
-    return mount(PairMaker, {
-        global: {
-            plugins: [PrimeVue],
-            components: {ToggleButton, Dropdown, Button}
-        }
-    })
+    return mountComponentWithPrimeVue(PairMaker);
 }
