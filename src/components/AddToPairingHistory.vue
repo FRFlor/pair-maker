@@ -1,16 +1,23 @@
 <script lang="ts" setup>
 import useStoreNames from "@/composables/useStoreNames";
-import {computed, ref} from "vue";
+import {computed, ref, watch} from "vue";
 import {useMakePairs} from "@/composables/useMakePairs";
 
 const {names} = useStoreNames();
-const {savePairing} = useMakePairs(names);
+const {savePairing, pairingHistory} = useMakePairs(names);
 
 const leftHandSide = ref(names.value[0] ?? "");
 
-const rightHandSide = ref<{ [name: string]: boolean }>(
-    names.value.reduce((final, name) => ({...final, [name]: false}), {})
-);
+const rightHandSide = ref<{ [name: string]: boolean }>(getNewRightHandSideSelection());
+
+function getNewRightHandSideSelection() {
+  return names.value.reduce((final, name) => {
+    const isPairing = name !== leftHandSide.value && pairingHistory.value[leftHandSide.value]?.includes(name)
+    return {...final, [name]: isPairing}
+  }, {})
+}
+
+watch(leftHandSide, () => rightHandSide.value = getNewRightHandSideSelection())
 
 const leftHandSideOptions = names.value;
 const rightHandSideOptions = computed(() => names.value.filter(name => name !== leftHandSide.value));

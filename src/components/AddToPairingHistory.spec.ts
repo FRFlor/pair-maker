@@ -5,6 +5,14 @@ import {useMakePairs} from "@/composables/useMakePairs";
 import Dropdown from "primevue/dropdown";
 import {mountComponentWithPrimeVue} from "../../testHelpers";
 
+async function assertToggleButtonIsOn(wrapper: VueWrapper, selector: string) {
+    expect(wrapper.find(selector).classes("p-highlight")).toBeTruthy();
+}
+
+async function assertToggleButtonIsOff(wrapper: VueWrapper, selector: string) {
+    expect(wrapper.find(selector).classes("p-highlight")).toBeFalsy();
+}
+
 describe('AddToPairingHistory', () => {
     it('populates the select options with all the member names', async () => {
         const names = ["Alice", "Bob"];
@@ -26,6 +34,20 @@ describe('AddToPairingHistory', () => {
 
         assertPairingHistoryHas("Alice");
         assertPairingHistoryHas("Bob");
+    });
+
+    it("pre selects pairings that are already in history", async () => {
+        const wrapper = getWrapper(["Alice", "Bob", "Charlie"]);
+
+        await selectNameInDropdown(wrapper, 'Alice');
+        await wrapper.find("[toggle-name=Bob]").trigger("click");
+        await assertToggleButtonIsOn(wrapper, "[toggle-name=Bob]");
+
+        await wrapper.find("#save-to-pairing-history").trigger("click");
+
+        await selectNameInDropdown(wrapper, 'Bob');
+        await assertToggleButtonIsOn(wrapper, "[toggle-name=Alice]");
+        await assertToggleButtonIsOff(wrapper, "[toggle-name=Charlie]");
     });
 });
 
