@@ -34,7 +34,7 @@ function saveToPairingHistory() {
   <Dropdown v-model="leftHandSide"
             :options="leftHandSideOptions"
             name="right-hand-side"
-            placeholder="Select a City"
+            placeholder="Select a member"
             style="width: 20rem;"/>
 
   <ul>
