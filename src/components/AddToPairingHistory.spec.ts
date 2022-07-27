@@ -1,27 +1,27 @@
-import {mount} from "@vue/test-utils";
+import {mount, VueWrapper} from "@vue/test-utils";
 import AddToPairingHistory from "@/components/AddToPairingHistory.vue";
 import useStoreNames from "@/composables/useStoreNames";
 import {useMakePairs} from "@/composables/useMakePairs";
 import PrimeVue from "primevue/config";
 import ToggleButton from "primevue/togglebutton";
+import Dropdown from "primevue/dropdown";
 
 describe('AddToPairingHistory', () => {
-    it('populates the select options with all the member names', () => {
+    it('populates the select options with all the member names', async () => {
         const names = ["Alice", "Bob"];
         const wrapper = getWrapper(names);
 
-        const allSelectOptions = wrapper.findAll('option')
+        await selectNameInDropdown(wrapper, 'Alice');
+        expect(wrapper.find(`[toggle-name=Bob]`).exists()).toBe(true)
 
-        names.forEach(name => {
-            const hasOptionForName = allSelectOptions.some((option) => option.text().includes(name));
-            expect(hasOptionForName).toBe(true)
-        });
+        await selectNameInDropdown(wrapper, 'Bob');
+        expect(wrapper.find(`[toggle-name=Alice]`).exists()).toBe(true)
     });
 
     it("Allows Manual Entries to the Pairing History", async () => {
         const wrapper = getWrapper(["Alice", "Bob"]);
 
-        await wrapper.find("select[name=right-hand-side]").setValue("Alice");
+        await selectNameInDropdown(wrapper, 'Alice');
         await wrapper.find("[toggle-name=Bob]").trigger("click");
         await wrapper.find("#save-to-pairing-history").trigger("click");
 
@@ -42,9 +42,14 @@ function getWrapper(startingNames: string[] = []) {
     return mount(AddToPairingHistory, {
         global: {
             plugins: [PrimeVue],
-            components: {ToggleButton}
+            components: {ToggleButton, Dropdown}
         }
     });
+}
+
+async function selectNameInDropdown(wrapper: VueWrapper, name: string) {
+    wrapper.findComponent(Dropdown).vm.$emit('update:modelValue', name);
+    await wrapper.vm.$nextTick();
 }
 
 function assertPairingHistoryHas(name: string) {

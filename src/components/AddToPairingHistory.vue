@@ -23,9 +23,12 @@ function saveToPairingHistory() {
 
 <template>
   <h2>Add to pairing history</h2>
-  <select v-model="leftHandSide" name="right-hand-side">
-    <option v-for="name in leftHandSideOptions" :key="`right-hand-side-${name}`" :value="name">{{ name }}</option>
-  </select>
+
+  <Dropdown v-model="leftHandSide"
+            :options="leftHandSideOptions"
+            name="right-hand-side"
+            placeholder="Select a City"
+            style="width: 20rem;"/>
 
   <ul>
     <li v-for="name in rightHandSideOptions"

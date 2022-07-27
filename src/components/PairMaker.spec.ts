@@ -2,6 +2,7 @@ import {mount, VueWrapper} from '@vue/test-utils'
 import PairMaker from '@/components/PairMaker.vue'
 import PrimeVue from "primevue/config";
 import ToggleButton from "primevue/togglebutton";
+import Dropdown from "primevue/dropdown";
 
 describe('PairMaker.vue', () => {
     let wrapper: VueWrapper;
@@ -100,7 +101,7 @@ function getWrapper(initialNames: string[]): VueWrapper {
     return mount(PairMaker, {
         global: {
             plugins: [PrimeVue],
-            components: {ToggleButton}
+            components: {ToggleButton, Dropdown}
         }
     })
 }
