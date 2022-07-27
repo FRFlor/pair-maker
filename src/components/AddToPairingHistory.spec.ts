@@ -5,6 +5,7 @@ import {useMakePairs} from "@/composables/useMakePairs";
 import PrimeVue from "primevue/config";
 import ToggleButton from "primevue/togglebutton";
 import Dropdown from "primevue/dropdown";
+import Button from "primevue/button";
 
 describe('AddToPairingHistory', () => {
     it('populates the select options with all the member names', async () => {
@@ -42,7 +43,7 @@ function getWrapper(startingNames: string[] = []) {
     return mount(AddToPairingHistory, {
         global: {
             plugins: [PrimeVue],
-            components: {ToggleButton, Dropdown}
+            components: {ToggleButton, Dropdown, Button}
         }
     });
 }

@@ -6,6 +6,7 @@ import "primeicons/primeicons.css" //icons
 import "primevue/resources/themes/saga-orange/theme.css"; //theme
 import ToggleButton from "primevue/togglebutton";
 import Dropdown from "primevue/dropdown";
+import Button from "primevue/button";
 
 const app = createApp(App);
 
@@ -13,6 +14,7 @@ app.use(PrimeVue);
 
 app.component('ToggleButton', ToggleButton);
 app.component('Dropdown', Dropdown);
+app.component('Button', Button);
 
 
 app.mount('#app');

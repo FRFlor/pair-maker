@@ -44,7 +44,11 @@ function saveToPairingHistory() {
   </ul>
 
 
-  <button id="save-to-pairing-history" @click="saveToPairingHistory">Save</button>
+  <Button id="save-to-pairing-history"
+          class="p-button-lg"
+          @click="saveToPairingHistory"><i class="pi pi-save"/>Save
+  </Button>
+
 </template>
 
 
