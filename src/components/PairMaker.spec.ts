@@ -1,20 +1,20 @@
 import {mount, VueWrapper} from '@vue/test-utils'
 import PairMaker from '@/components/PairMaker.vue'
+import PrimeVue from "primevue/config";
+import ToggleButton from "primevue/togglebutton";
 
 describe('PairMaker.vue', () => {
     let wrapper: VueWrapper;
 
     beforeEach(() => {
-        localStorage.clear();
-        wrapper = mount(PairMaker);
+        wrapper = getWrapper([]);
     })
 
     it('Displays all names', () => {
-        const namesInLocalStorage = ["Ana", "Boris", "Clara"];
-        localStorage.setItem("names", JSON.stringify(namesInLocalStorage));
-        wrapper = mount(PairMaker)
+        const names = ["Ana", "Boris", "Clara", "Daniel"];
+        wrapper = getWrapper(names);
 
-        namesInLocalStorage.forEach(nameInLocalStorage => expect(wrapper.text()).toContain(nameInLocalStorage));
+        names.forEach(nameInLocalStorage => expect(wrapper.text()).toContain(nameInLocalStorage));
     })
 
     it("Allows a new name to be added", async () => {
@@ -41,22 +41,20 @@ describe('PairMaker.vue', () => {
 
         await wrapper.find("button.delete-name").trigger("click");
 
-        expect(wrapper.text()).not.toContain("Boris");
+        expect(wrapper.find("#all-names-list").text()).not.toContain("Boris");
     });
 
     it("Displays proposed pairings", async () => {
-        const namesInLocalStorage = ["Ana", "Boris", "Clara", "Daniel"];
-        localStorage.setItem("names", JSON.stringify(namesInLocalStorage));
-        wrapper = mount(PairMaker)
+        const names = ["Ana", "Boris", "Clara", "Daniel"];
+        wrapper = getWrapper(names);
 
         await wrapper.find("button#see-proposed-pairings").trigger("click");
-        namesInLocalStorage.forEach(name => expect(wrapper.find('#pairs-list').text()).toContain(name));
+        names.forEach(name => expect(wrapper.find('#pairs-list').text()).toContain(name));
     });
 
     it("allows a proposed pairing to be saved", async () => {
-        const namesInLocalStorage = ["Ana", "Boris", "Clara", "Daniel"];
-        localStorage.setItem("names", JSON.stringify(namesInLocalStorage));
-        wrapper = mount(PairMaker)
+        const names = ["Ana", "Boris", "Clara", "Daniel"];
+        wrapper = getWrapper(names);
 
         await wrapper.find("button#see-proposed-pairings").trigger("click");
         const originalProposedPair = wrapper.find('#pairs-list li').text();
@@ -70,23 +68,20 @@ describe('PairMaker.vue', () => {
     });
 
     it("Displays pairing history", async () => {
-        const namesInLocalStorage = ["Ana", "Boris", "Clara", "Daniel"];
-        localStorage.setItem("names", JSON.stringify(namesInLocalStorage));
-        wrapper = mount(PairMaker)
+        const names = ["Ana", "Boris", "Clara", "Daniel"];
+        wrapper = getWrapper(names);
 
         await wrapper.find("button#see-proposed-pairings").trigger("click");
 
         await wrapper.find("button#save-proposed-pairing").trigger("click");
 
-        namesInLocalStorage.forEach(name =>
+        names.forEach(name =>
             expect(wrapper.find('#pairing-history').text()).toContain(name));
 
     });
 
     it("Displays errors", async () => {
-        const namesInLocalStorage = ["Ana", "Boris"];
-        localStorage.setItem("names", JSON.stringify(namesInLocalStorage));
-        wrapper = mount(PairMaker)
+        wrapper = getWrapper(["Ana", "Boris"]);
 
         expect(wrapper.find('#errors').text()).toEqual("");
 
@@ -96,16 +91,16 @@ describe('PairMaker.vue', () => {
 
         expect(wrapper.find('#errors').text()).not.toEqual("");
     })
-
-    it("Allows Manual Entries to the Pairing History", async () => {
-        const namesInLocalStorage = ["Ana", "Boris"];
-        localStorage.setItem("names", JSON.stringify(namesInLocalStorage));
-        wrapper = mount(PairMaker)
-
-        await wrapper.find("#manual-pairing select[name=right-hand-side]").setValue("Ana");
-        await wrapper.find("#manual-pairing select[name=left-hand-side]").setValue("Boris");
-        await wrapper.find("#manual-pairing button").trigger("click");
-
-        expect(wrapper.find("#pairing-history").text()).toContain("Ana");
-    });
 })
+
+function getWrapper(initialNames: string[]): VueWrapper {
+    localStorage.clear();
+    localStorage.setItem("names", JSON.stringify(initialNames));
+
+    return mount(PairMaker, {
+        global: {
+            plugins: [PrimeVue],
+            components: {ToggleButton}
+        }
+    })
+}
