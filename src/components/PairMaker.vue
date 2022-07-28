@@ -55,10 +55,10 @@ function saveProposedPairings() {
 </script>
 
 <template>
-  <section>
+  <section class="grid gap-3">
     <p id="errors">{{ errors }}</p>
-    <form id="new-name-input-group" class="h-10 md:h-14" @submit.prevent>
-      <InputText id="new-name" v-model="newName" type="text"/>
+    <form id="new-name-input-group" class="flex h-10 md:h-14" @submit.prevent>
+      <InputText id="new-name" v-model="newName" class="flex-1" type="text"/>
       <Button id="add-name"
               :disabled="newName.trim().length === 0"
               class="p-button-lg  text-xs w-36"
@@ -83,11 +83,28 @@ function saveProposedPairings() {
 
     <div id="pairs-list">
       <h2>Proposed Pairs</h2>
-      <button id="see-proposed-pairings" @click="displayProposedPairings">Propose pairs</button>
-      <button id="save-proposed-pairing" @click="saveProposedPairings">Save pairs</button>
+
+      <section class="w-80 flex justify-between">
+        <Button id="see-proposed-pairings"
+                class="delete-name h-10 p-button-secondary"
+                @click="displayProposedPairings">
+          <i class="pi pi-trash mr-2"></i>Propose pairs
+        </Button>
+
+        <Button id="save-proposed-pairing"
+                class="delete-name h-10"
+                @click="saveProposedPairings">
+          <i class="pi pi-save mr-2"></i>Save pairs
+        </Button>
+      </section>
+
       <ul>
         <li v-for="proposedPairing in proposedPairingList" :key="proposedPairing">{{ proposedPairing }}</li>
       </ul>
+    </div>
+
+    <div id="manual-pairing">
+      <AddToPairingHistory/>
     </div>
 
     <div id="pairing-history">
@@ -97,18 +114,12 @@ function saveProposedPairings() {
       </ul>
     </div>
 
-    <div id="manual-pairing">
-      <AddToPairingHistory/>
-    </div>
-
   </section>
 </template>
 
 <style scoped>
 
 section {
-  display: grid;
-  grid-gap: 3rem;
   grid-template-areas: "input" "errors" "names" "pairs" "history"
 }
 
@@ -126,7 +137,6 @@ section {
   }
 }
 
-
 #errors {
   grid-area: errors;
   color: darkred;
@@ -136,31 +146,13 @@ section {
 
 #new-name-input-group {
   grid-area: input;
-  display: flex;
-}
-
-#new-name-input-group input {
-  flex: 1;
 }
 
 #all-names-list {
   grid-area: names
 }
 
-
 #pairs-list {
   grid-area: pairs
-}
-
-ul {
-  list-style: none;
-  padding: 0;
-}
-
-li {
-
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
 }
 </style>

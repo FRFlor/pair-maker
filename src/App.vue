@@ -1,5 +1,5 @@
 <template>
-  <main class="flex flex-col items-center my-6 mx-4">
+  <main class="my-6 mx-4 xl:mx-auto max-w-7xl">
     <h1>Bonello Rodello</h1>
     <PairMaker/>
   </main>
