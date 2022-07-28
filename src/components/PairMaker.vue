@@ -102,16 +102,25 @@ function saveProposedPairings() {
 </template>
 
 <style scoped>
+
 section {
   display: grid;
   grid-gap: 3rem;
-  grid-template-areas:
+  grid-template-areas: "input" "errors" "names" "pairs" "history"
+}
+
+
+@screen md {
+  section {
+    grid-template-areas:
         "input input input"
         "errors errors errors"
         "names pairs history"
         "names pairs history"
         "names pairs history"
+  }
 }
+
 
 #errors {
   grid-area: errors;

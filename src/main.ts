@@ -4,7 +4,7 @@ import PrimeVue from "primevue/config";
 import "@/assets/tailwind.css"
 import "primevue/resources/primevue.min.css" //core css
 import "primeicons/primeicons.css" //icons
-import "primevue/resources/themes/saga-orange/theme.css"; //theme
+import "primevue/resources/themes/saga-green/theme.css";
 import ToggleButton from "primevue/togglebutton";
 import Dropdown from "primevue/dropdown";
 import Button from "primevue/button";
