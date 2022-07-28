@@ -4,12 +4,13 @@ import PrimeVue from "primevue/config";
 import ToggleButton from "primevue/togglebutton";
 import Dropdown from "primevue/dropdown";
 import Button from "primevue/button";
+import InputText from "primevue/inputtext";
 
 export function mountComponentWithPrimeVue(component: Component) {
     return mount(component as DefineComponent, {
         global: {
             plugins: [PrimeVue],
-            components: {ToggleButton, Dropdown, Button}
+            components: {ToggleButton, Dropdown, Button, InputText}
         }
     })
 }
