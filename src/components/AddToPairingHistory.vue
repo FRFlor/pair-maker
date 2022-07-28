@@ -35,9 +35,9 @@ function saveToPairingHistory() {
             :options="leftHandSideOptions"
             name="right-hand-side"
             placeholder="Select a member"
-            style="width: 20rem;"/>
+            class="w-full"/>
 
-  <ul>
+  <ul class="my-6">
     <li v-for="name in rightHandSideOptions"
         :key="`right-hand-side-2-${name}`">
       <ToggleButton v-model="rightHandSide[name]"
@@ -46,7 +46,7 @@ function saveToPairingHistory() {
                     :toggle-name="name"
                     offIcon="pi pi-times"
                     onIcon="pi pi-check"
-                    style="width: 10em"/>
+                    class="w-full"/>
     </li>
   </ul>
 
