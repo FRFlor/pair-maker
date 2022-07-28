@@ -7,11 +7,11 @@
 </template>
 
 <script lang="ts">
-import {defineComponent} from 'vue';
-import PairMaker from './components/PairMaker.vue';
+import {defineComponent} from "vue";
+import PairMaker from "./components/PairMaker.vue";
 
 export default defineComponent({
-  name: 'App',
+  name: "App",
   components: {
     PairMaker
   }

@@ -1,15 +1,15 @@
-import {VueWrapper} from '@vue/test-utils'
-import PairMaker from '@/components/PairMaker.vue'
+import {VueWrapper} from "@vue/test-utils"
+import PairMaker from "@/components/PairMaker.vue"
 import {mountComponentWithPrimeVue} from "../../testHelpers";
 
-describe('PairMaker.vue', () => {
+describe("PairMaker.vue", () => {
     let wrapper: VueWrapper;
 
     beforeEach(() => {
         wrapper = getWrapper([]);
     })
 
-    it('Displays all names', () => {
+    it("Displays all names", () => {
         const names = ["Ana", "Boris", "Clara", "Daniel"];
         wrapper = getWrapper(names);
 
@@ -48,7 +48,7 @@ describe('PairMaker.vue', () => {
         wrapper = getWrapper(names);
 
         await wrapper.find("button#see-proposed-pairings").trigger("click");
-        names.forEach(name => expect(wrapper.find('#pairs-list').text()).toContain(name));
+        names.forEach(name => expect(wrapper.find("#pairs-list").text()).toContain(name));
     });
 
     it("allows a proposed pairing to be saved", async () => {
@@ -56,12 +56,12 @@ describe('PairMaker.vue', () => {
         wrapper = getWrapper(names);
 
         await wrapper.find("button#see-proposed-pairings").trigger("click");
-        const originalProposedPair = wrapper.find('#pairs-list li').text();
+        const originalProposedPair = wrapper.find("#pairs-list li").text();
         await wrapper.find("button#save-proposed-pairing").trigger("click");
 
         for (let i = 0; i < 300; i++) {
             await wrapper.find("button#see-proposed-pairings").trigger("click");
-            wrapper.findAll('#pairs-list li').forEach((proposedPair) =>
+            wrapper.findAll("#pairs-list li").forEach((proposedPair) =>
                 expect(proposedPair.text()).not.toContain(originalProposedPair))
         }
     });
@@ -75,20 +75,20 @@ describe('PairMaker.vue', () => {
         await wrapper.find("button#save-proposed-pairing").trigger("click");
 
         names.forEach(name =>
-            expect(wrapper.find('#pairing-history').text()).toContain(name));
+            expect(wrapper.find("#pairing-history").text()).toContain(name));
 
     });
 
     it("Displays errors", async () => {
         wrapper = getWrapper(["Ana", "Boris"]);
 
-        expect(wrapper.find('#errors').text()).toEqual("");
+        expect(wrapper.find("#errors").text()).toEqual("");
 
         await wrapper.find("button#see-proposed-pairings").trigger("click");
         await wrapper.find("button#save-proposed-pairing").trigger("click");
         await wrapper.find("button#see-proposed-pairings").trigger("click");
 
-        expect(wrapper.find('#errors').text()).not.toEqual("");
+        expect(wrapper.find("#errors").text()).not.toEqual("");
     })
 })
 

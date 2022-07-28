@@ -13,8 +13,8 @@ function getMakePairsComposable(startingNames: string[] = []) {
     return useMakePairs(names);
 }
 
-describe('useMakePairs', () => {
-    describe('data persistence', () => {
+describe("useMakePairs", () => {
+    describe("data persistence", () => {
         it("Stores the pairingHistory in Local Storage", () => {
             const {savePairing, pairingHistory} = getMakePairsComposable(["Ana", "Boris"]);
             savePairing({"Ana": "Boris"});
