@@ -37,7 +37,7 @@ function saveToPairingHistory() {
             placeholder="Select a member"
             class="w-full"/>
 
-  <ul class="my-6">
+  <ul class="my-6 grid grid-cols-2">
     <li v-for="name in rightHandSideOptions"
         :key="`right-hand-side-2-${name}`">
       <ToggleButton v-model="rightHandSide[name]"
@@ -57,16 +57,3 @@ function saveToPairingHistory() {
   </Button>
 
 </template>
-
-
-<style scoped>
-ul {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  padding: 0;
-}
-
-li {
-  list-style: none;
-}
-</style>
