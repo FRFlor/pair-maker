@@ -1,6 +1,6 @@
 <template>
   <main>
-    <h1>Bonello Rodello</h1>
+    <h1 class="bg-red-300">Bonello Rodello</h1>
     <PairMaker/>
   </main>
 
