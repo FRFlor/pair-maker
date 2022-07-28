@@ -59,7 +59,13 @@ function saveProposedPairings() {
     <p id="errors">{{ errors }}</p>
     <form id="new-name-input-group" @submit.prevent>
       <InputText id="new-name" v-model="newName" type="text"/>
-      <button id="add-name" :disabled="newName.trim().length === 0" @click="saveNewName">Save Name</button>
+      <Button id="add-name"
+              :disabled="newName.trim().length === 0"
+              class="p-button-lg"
+              type="submit"
+              @click="saveNewName">
+        Save Name
+      </Button>
     </form>
 
     <div id="all-names-list">
