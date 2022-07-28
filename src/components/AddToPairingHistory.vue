@@ -17,7 +17,7 @@ function getNewRightHandSideSelection() {
   }, {})
 }
 
-watch(leftHandSide, () => rightHandSide.value = getNewRightHandSideSelection())
+watch([leftHandSide, pairingHistory], () => rightHandSide.value = getNewRightHandSideSelection())
 
 const leftHandSideOptions = names.value;
 const rightHandSideOptions = computed(() => names.value.filter(name => name !== leftHandSide.value));
