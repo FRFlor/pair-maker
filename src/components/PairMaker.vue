@@ -71,9 +71,12 @@ function saveProposedPairings() {
     <div id="all-names-list">
       <h2>All Names</h2>
       <ul>
-        <li v-for="name in names" :key="name">
-          <button class="delete-name" @click="() => deleteName(name)">X</button>
-          <p>{{ name }}</p>
+        <li v-for="name in names" :key="name" class="flex items-center justify-start h-14 text-green-700">
+          <Button class="delete-name h-10 p-button-outlined p-button-danger"
+                  @click="() => deleteName(name)">
+            <i class="pi pi-trash"></i>
+          </Button>
+          <p class="ml-5 text-xl w-44 overflow-hidden whitespace-nowrap overflow-ellipsis flex-1">{{ name }}</p>
         </li>
       </ul>
     </div>
@@ -112,12 +115,14 @@ section {
 
 @screen md {
   section {
+    grid-template-columns: 0.5fr 0.5fr 1fr;
     grid-template-areas:
         "input input input"
         "errors errors errors"
-        "names pairs history"
-        "names pairs history"
-        "names pairs history"
+        "pairs pairs pairs"
+        "names names history"
+        "names names history"
+        "names names history"
   }
 }
 

@@ -1,5 +1,5 @@
 <template>
-  <main class="flex flex-col items-center my-6">
+  <main class="flex flex-col items-center my-6 mx-4">
     <h1>Bonello Rodello</h1>
     <PairMaker/>
   </main>
