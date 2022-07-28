@@ -1,9 +1,8 @@
 <template>
-  <main>
-    <h1 class="bg-red-300">Bonello Rodello</h1>
+  <main class="flex flex-col items-center my-6">
+    <h1>Bonello Rodello</h1>
     <PairMaker/>
   </main>
-
 </template>
 
 <script lang="ts">
@@ -17,11 +16,3 @@ export default defineComponent({
   }
 });
 </script>
-
-<style>
-main {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-</style>

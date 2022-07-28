@@ -3,3 +3,11 @@
 @tailwind components;
 
 @tailwind utilities;
+
+h1 {
+    @apply text-orange-500 text-3xl mb-2 font-extrabold font-serif
+}
+
+h2 {
+    @apply text-orange-500 text-2xl font-bold font-serif
+}
