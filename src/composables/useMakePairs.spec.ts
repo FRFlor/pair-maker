@@ -2,17 +2,6 @@ import {useStoreNames} from "@/composables/useStoreNames";
 import {useMakePairs} from "@/composables/useMakePairs";
 import {TIMEOUT} from "@/constants";
 
-function getMakePairsComposable(startingNames: string[] = []) {
-    localStorage.clear();
-    const {names, addNewNameToList} = useStoreNames();
-    names.value = [];
-    startingNames.forEach(name => addNewNameToList(name));
-    const {pairingHistory} = useMakePairs(names);
-    pairingHistory.value = {};
-
-    return useMakePairs(names);
-}
-
 describe("useMakePairs", () => {
     describe("data persistence", () => {
         it("Stores the pairingHistory in Local Storage", () => {
@@ -122,3 +111,14 @@ describe("useMakePairs", () => {
         })
     });
 });
+
+function getMakePairsComposable(startingNames: string[] = []) {
+    localStorage.clear();
+    const {names, addNewNameToList} = useStoreNames();
+    names.value = [];
+    startingNames.forEach(name => addNewNameToList(name));
+    const {pairingHistory} = useMakePairs(names);
+    pairingHistory.value = {};
+
+    return useMakePairs(names);
+}
