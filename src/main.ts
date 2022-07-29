@@ -9,6 +9,7 @@ import ToggleButton from "primevue/togglebutton";
 import Dropdown from "primevue/dropdown";
 import Button from "primevue/button";
 import InputText from "primevue/inputtext";
+import Fieldset from "primevue/fieldset";
 
 const app = createApp(App);
 
@@ -18,6 +19,7 @@ app.component("ToggleButton", ToggleButton);
 app.component("Dropdown", Dropdown);
 app.component("Button", Button);
 app.component("InputText", InputText);
+app.component("Fieldset", Fieldset);
 
 
 app.mount("#app");

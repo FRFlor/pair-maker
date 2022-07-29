@@ -20,12 +20,6 @@ const proposedPairingList = computed<string[]>(() => {
       });
 })
 
-const pairingHistoryList = computed<string[]>(() => {
-  return Object.keys(pairingHistory.value)
-      .map((name: string) => `${name}: `
-          + JSON.stringify(pairingHistory.value[name]).replaceAll("\"", ""));
-})
-
 function saveNewName() {
   errors.value = "";
   try {
@@ -84,7 +78,7 @@ function saveProposedPairings() {
     <div id="pairs-list">
       <h2>Proposed Pairs</h2>
 
-      <section class="md:w-80 flex justify-between">
+      <section class="w-80 flex justify-between">
         <Button id="see-proposed-pairings"
                 class="delete-name h-10 p-button-secondary"
                 @click="displayProposedPairings">
@@ -100,7 +94,8 @@ function saveProposedPairings() {
 
       <ul class="bg-white rounded-lg border border-green-200 md:w-96 text-gray-900 mt-4">
         <li v-if="proposedPairingList.length === 0"
-            class="px-6 py-2 border-b border-green-200 bg-green-50 w-full rounded-t-lg"> No pairings yet!
+            class="px-6 py-2 border-b border-green-200 bg-green-50 w-full rounded-t-lg">
+          No pairings yet!
         </li>
         <li v-for="proposedPairing in proposedPairingList"
             v-else
@@ -116,10 +111,18 @@ function saveProposedPairings() {
       <AddToPairingHistory/>
     </div>
 
-    <div id="pairing-history" class="hidden lg:block">
+    <div id="pairing-history">
       <h2>Pairing History</h2>
       <ul>
-        <li v-for="pairingHistoryEntry in pairingHistoryList" :key="pairingHistoryEntry">{{ pairingHistoryEntry }}</li>
+        <li v-for="(previousPairs, person) in pairingHistory" :key="person">
+          <Fieldset :legend="person" :toggleable="true">
+            <div class="flex items-center justify-evenly max-w-xl flex-wrap gap-2">
+              <pairing-chip v-for="pair in previousPairs" :key="`${person}-${pair}`" class="chip">
+                {{ pair }}
+              </pairing-chip>
+            </div>
+          </Fieldset>
+        </li>
       </ul>
     </div>
 
@@ -169,4 +172,10 @@ section {
 #pairing-history {
   grid-area: history;
 }
+
+.chip {
+  @apply px-4 py-2 rounded-full border border-green-500 text-green-500 bg-gray-100 font-semibold text-sm w-36
+  whitespace-nowrap overflow-ellipsis overflow-hidden text-center;
+}
+
 </style>
