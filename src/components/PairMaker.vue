@@ -61,7 +61,7 @@ function saveProposedPairings() {
       <InputText id="new-name" v-model="newName" class="flex-1" type="text"/>
       <Button id="add-name"
               :disabled="newName.trim().length === 0"
-              class="p-button-lg  text-xs w-36"
+              class="p-button-lg  text-xs md:w-36"
               type="submit"
               @click="saveNewName">
         Save Name
@@ -84,7 +84,7 @@ function saveProposedPairings() {
     <div id="pairs-list">
       <h2>Proposed Pairs</h2>
 
-      <section class="w-80 flex justify-between">
+      <section class="md:w-80 flex justify-between">
         <Button id="see-proposed-pairings"
                 class="delete-name h-10 p-button-secondary"
                 @click="displayProposedPairings">
@@ -98,13 +98,14 @@ function saveProposedPairings() {
         </Button>
       </section>
 
-      <ul class="bg-white rounded-lg border border-green-200 w-40 md:w-96 text-gray-900 mt-4">
+      <ul class="bg-white rounded-lg border border-green-200 md:w-96 text-gray-900 mt-4">
         <li v-if="proposedPairingList.length === 0"
             class="px-6 py-2 border-b border-green-200 bg-green-50 w-full rounded-t-lg"> No pairings yet!
         </li>
         <li v-for="proposedPairing in proposedPairingList"
             v-else
             :key="proposedPairing"
+            :class="{'bg-orange-50 font-bold': proposedPairing.includes('TIMEOUT:')}"
             class="px-6 py-2 border-b border-green-200 bg-green-50 w-full rounded-t-lg">
           {{ proposedPairing }}
         </li>

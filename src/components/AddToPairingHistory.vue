@@ -46,14 +46,15 @@ function saveToPairingHistory() {
                     :toggle-name="name"
                     offIcon="pi pi-times"
                     onIcon="pi pi-check"
-                    class="w-full"/>
+                    class="w-full whitespace-nowrap"/>
     </li>
   </ul>
 
 
   <Button id="save-to-pairing-history"
           class="p-button-lg"
-          @click="saveToPairingHistory"><i class="pi pi-save mr-2"/>Save Pair
+          @click="saveToPairingHistory"><i class="pi pi-save mr-2"/>
+    Save Pair
   </Button>
 
 </template>
