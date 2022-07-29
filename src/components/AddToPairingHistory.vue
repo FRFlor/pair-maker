@@ -1,6 +1,6 @@
 <script lang="ts" setup>
-import {useStoreNames} from "@/composables/useStoreNames";
 import {computed, ref, watch} from "vue";
+import {useStoreNames} from "@/composables/useStoreNames";
 import {useMakePairs} from "@/composables/useMakePairs";
 
 const {names} = useStoreNames();
@@ -33,9 +33,9 @@ function saveToPairingHistory() {
 
   <Dropdown v-model="leftHandSide"
             :options="leftHandSideOptions"
+            class="w-full"
             name="right-hand-side"
-            placeholder="Select a member"
-            class="w-full"/>
+            placeholder="Select a member"/>
 
   <ul class="my-6 grid grid-cols-2">
     <li v-for="name in rightHandSideOptions"
@@ -44,9 +44,9 @@ function saveToPairingHistory() {
                     :offLabel="name"
                     :onLabel="name"
                     :toggle-name="name"
+                    class="w-full whitespace-nowrap"
                     offIcon="pi pi-times"
-                    onIcon="pi pi-check"
-                    class="w-full whitespace-nowrap"/>
+                    onIcon="pi pi-check"/>
     </li>
   </ul>
 
