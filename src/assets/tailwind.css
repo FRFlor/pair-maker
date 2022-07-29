@@ -5,9 +5,9 @@
 @tailwind utilities;
 
 h1 {
-    @apply text-green-600 text-3xl mb-4 font-extrabold font-serif
+    @apply text-green-600 text-3xl my-4 font-extrabold font-serif
 }
 
 h2 {
-    @apply text-green-600 text-2xl mb-4 font-bold font-serif
+    @apply text-green-600 text-2xl my-4 font-bold font-serif
 }

@@ -56,7 +56,7 @@ function saveProposedPairings() {
 
 <template>
   <section class="grid gap-3">
-    <p id="errors">{{ errors }}</p>
+    <p v-show="errors.length > 0" id="errors" class="text-red-800 text-xl my-4">{{ errors }}</p>
     <form id="new-name-input-group" class="flex h-10 lg:h-14" @submit.prevent>
       <InputText id="new-name" v-model="newName" class="flex-1" type="text"/>
       <Button id="add-name"
@@ -148,9 +148,6 @@ section {
 
 #errors {
   grid-area: errors;
-  color: darkred;
-  text-align: center;
-  font-size: large;
 }
 
 #new-name-input-group {
