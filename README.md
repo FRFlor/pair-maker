@@ -1,29 +1,110 @@
-# pair-maker
+# TechTalk!
 
-## Project setup
+<details>
+    <summary>What is Bonello Rodello?</summary>
+
+- Kudos to Justin
+- Let's try this again!
+
+</details>
+
+<details>
+    <summary>PrimeVue?</summary>
+
+- Loads of free themes available
+- Easy to load only the parts that you need
+- More fine-tuned customization of the components often can't be done with tailwind classes alone.
+
+</details>
+
+<details>
+  <summary>Installing Tailwind can be made simple using Vue UI.</summary>
+
+## Installing Tailwind can be made simple using Vue UI.
+
+To setup breakpoints that follow in accordance to the Tailwind sizes, there is a helpful @screen directive, that among
+other things allow you to use the Tailwind Breakpoints as values.
+
 ```
-npm install
+  
+@screen md {
+  section {
+    grid-template-areas:
+        "input input input"
+        "errors errors errors"
+        "names pairs history"
+        "names pairs history"
+        "names pairs history"
+  }
+}
+``` 
+
+</details>
+
+
+<details>
+  <summary>Justify Evenly</summary>
+
+## Justify Evenly
+
+CSS Flexbox has a way to justify content called "space-evenly".
+
+```html
+ <Fieldset :legend="person" :toggleable="true">
+            <div class="flex items-center justify-evenly max-w-xl flex-wrap gap-2">
+              <span v-for="pair in previousPairs" :key="`${person}-${pair}`" class="chip">
+                {{ pair }}
+              </span>
+            </div>
+  </Fieldset>
 ```
 
-### Compiles and hot-reloads for development
-```
-npm run serve
+</details>
+
+
+<details>
+  <summary>A downside of using Component Libraries</summary>
+
+## A downside of using Component Libraries
+
+Interacting with a "Select dropdown"
+
+Before (using native DOM elements)
+
+```typescript
+await wrapper.find("select[name=right-hand-side]").setValue("Alice");
 ```
 
-### Compiles and minifies for production
-```
-npm run build
+After (using PrimeVue Dropdown component)
+
+```typescript
+async function selectNameInDropdown(wrapper: VueWrapper, name: string) {
+    wrapper.findComponent(Dropdown).vm.$emit("update:modelValue", name);
+    await wrapper.vm.$nextTick();
+}
 ```
 
-### Run your unit tests
-```
-npm run test:unit
+## Checking options available
+
+Before (using native DOM elements)
+
+```typescript
+const allSelectOptions = wrapper.findAll('option')
 ```
 
-### Lints and fixes files
-```
-npm run lint
+After (using PrimeVue Dropdown component)
+
+```typescript
+await selectNameInDropdown(wrapper, "Alice");
+expect(wrapper.find(`[toggle-name=Bob]`).exists()).toBe(true)
+
+await selectNameInDropdown(wrapper, "Bob");
+expect(wrapper.find(`[toggle-name=Alice]`).exists()).toBe(true)
 ```
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+</details>
+
+<details>
+<summary>Thank You!</summary>
+</details>
+
