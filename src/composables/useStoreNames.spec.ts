@@ -1,4 +1,4 @@
-import useStoreNames from "@/composables/useStoreNames";
+import {useStoreNames} from "@/composables/useStoreNames";
 
 describe("useStoreNames", () => {
     beforeEach(() => {

@@ -1,6 +1,6 @@
 import {VueWrapper} from "@vue/test-utils";
 import AddToPairingHistory from "@/components/AddToPairingHistory.vue";
-import useStoreNames from "@/composables/useStoreNames";
+import {useStoreNames} from "@/composables/useStoreNames";
 import {useMakePairs} from "@/composables/useMakePairs";
 import Dropdown from "primevue/dropdown";
 import {mountComponentWithPrimeVue} from "../../testHelpers";

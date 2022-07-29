@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import useStoreNames from "@/composables/useStoreNames";
+import {useStoreNames} from "@/composables/useStoreNames";
 import {computed, ref, watch} from "vue";
 import {useMakePairs} from "@/composables/useMakePairs";
 

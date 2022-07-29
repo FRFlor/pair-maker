@@ -1,4 +1,4 @@
-import useStoreNames from "@/composables/useStoreNames";
+import {useStoreNames} from "@/composables/useStoreNames";
 import {useMakePairs} from "@/composables/useMakePairs";
 import {TIMEOUT} from "@/constants";
 

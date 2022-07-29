@@ -1,9 +1,9 @@
 <script lang="ts" setup>
-import useStoreNames from "@/composables/useStoreNames";
 import {computed, ref} from "vue";
+import {useStoreNames} from "@/composables/useStoreNames";
+import {useMakePairs} from "@/composables/useMakePairs";
 import {Pairing} from "@/types";
 import AddToPairingHistory from "@/components/AddToPairingHistory.vue";
-import {useMakePairs} from "@/composables/useMakePairs";
 import {TIMEOUT} from "@/constants";
 
 const {names, addNewNameToList, deleteName} = useStoreNames();
@@ -117,9 +117,9 @@ function saveProposedPairings() {
         <li v-for="(previousPairs, person) in pairingHistory" :key="person">
           <Fieldset :legend="person" :toggleable="true">
             <div class="flex items-center justify-evenly max-w-xl flex-wrap gap-2">
-              <pairing-chip v-for="pair in previousPairs" :key="`${person}-${pair}`" class="chip">
+              <span v-for="pair in previousPairs" :key="`${person}-${pair}`" class="chip">
                 {{ pair }}
-              </pairing-chip>
+              </span>
             </div>
           </Fieldset>
         </li>

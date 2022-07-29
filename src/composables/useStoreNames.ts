@@ -2,7 +2,7 @@ import {ref} from "vue";
 
 const names = ref<string[]>([]);
 
-export default function useStoreNames() {
+export function useStoreNames() {
     names.value = loadNames();
 
     function loadNames() {
