@@ -57,7 +57,7 @@ function saveProposedPairings() {
 <template>
   <section class="grid gap-3">
     <p id="errors">{{ errors }}</p>
-    <form id="new-name-input-group" class="flex h-10 md:h-14" @submit.prevent>
+    <form id="new-name-input-group" class="flex h-10 lg:h-14" @submit.prevent>
       <InputText id="new-name" v-model="newName" class="flex-1" type="text"/>
       <Button id="add-name"
               :disabled="newName.trim().length === 0"
@@ -98,8 +98,16 @@ function saveProposedPairings() {
         </Button>
       </section>
 
-      <ul>
-        <li v-for="proposedPairing in proposedPairingList" :key="proposedPairing">{{ proposedPairing }}</li>
+      <ul class="bg-white rounded-lg border border-green-200 w-40 md:w-96 text-gray-900 mt-4">
+        <li v-if="proposedPairingList.length === 0"
+            class="px-6 py-2 border-b border-green-200 bg-green-50 w-full rounded-t-lg"> No pairings yet!
+        </li>
+        <li v-for="proposedPairing in proposedPairingList"
+            v-else
+            :key="proposedPairing"
+            class="px-6 py-2 border-b border-green-200 bg-green-50 w-full rounded-t-lg">
+          {{ proposedPairing }}
+        </li>
       </ul>
     </div>
 
@@ -107,7 +115,7 @@ function saveProposedPairings() {
       <AddToPairingHistory/>
     </div>
 
-    <div id="pairing-history">
+    <div id="pairing-history" class="hidden lg:block">
       <h2>Pairing History</h2>
       <ul>
         <li v-for="pairingHistoryEntry in pairingHistoryList" :key="pairingHistoryEntry">{{ pairingHistoryEntry }}</li>
@@ -120,18 +128,18 @@ function saveProposedPairings() {
 <style scoped>
 
 section {
-  grid-template-areas: "input" "errors" "names" "pairs" "history"
+  grid-template-areas: "input" "errors" "names" "pairs" "manual" "history"
 }
 
 
-@screen md {
+@screen lg {
   section {
     grid-template-columns: 0.5fr 0.5fr 1fr;
     grid-template-areas:
         "input input input"
         "errors errors errors"
-        "pairs pairs pairs"
-        "names names history"
+        "pairs pairs manual"
+        "names names manual"
         "names names history"
         "names names history"
   }
@@ -154,5 +162,13 @@ section {
 
 #pairs-list {
   grid-area: pairs
+}
+
+#manual-pairing {
+  grid-area: manual;
+}
+
+#pairing-history {
+  grid-area: history;
 }
 </style>

@@ -1,5 +1,5 @@
 <template>
-  <main class="my-6 mx-4 xl:mx-auto max-w-7xl">
+  <main class="my-6 mx-4 md:mx-10 xl:mx-auto max-w-7xl">
     <h1>Bonello Rodello</h1>
     <PairMaker/>
   </main>
