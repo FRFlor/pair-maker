@@ -9,6 +9,26 @@
 </details>
 
 <details>
+<summary>Composition API</summary>
+
+- Similar to React Hooks
+
+- Makes isolating logic and reusing it in multiple components easier and safer than mixins
+
+- Tests for composables are just regular javascript tests
+
+</details>
+
+<details>
+<summary>A discussion on TDD</summary>
+
+- Tests that aren't great can still be useful. See RNG.spec.ts
+- Another note to Composables being great to work with
+- Using components libraries add some headaches to writing feature vue tests
+
+</details>
+
+<details>
     <summary>PrimeVue?</summary>
 
 - Loads of free themes available
